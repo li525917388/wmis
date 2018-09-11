@@ -7,7 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.stereotype.Repository;
 
-import com.ldh.hplus.common.model.BaseDaoPara;
+import com.ldh.hplus.common.util.BaseParameterType;
 
 
 @Repository
@@ -21,15 +21,25 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	}
 	
 	@Override
-	public List<Map<String, Object>> getBean(BaseDaoPara bdp) {
+	public List<Map<String, Object>> getBean(BaseParameterType bpt) {
 		
 		System.out.println("basedao");
 		
 		SqlSession sqlSession = sqlSessionFactory.openSession();
 		
-		List<Map<String, Object>> a = sqlSession.selectList("getBean",bdp);
+		List<Map<String, Object>> list = sqlSession.selectList("getBean",bpt);
 		
-		return a;
+		return list;
+	}
+
+	@Override
+	public List<Map<String, Object>> getAllList(String table) {
+		
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		
+		List<Map<String, Object>> list = sqlSession.selectList("getAllList",table);
+		
+		return list;
 	}
 
 }

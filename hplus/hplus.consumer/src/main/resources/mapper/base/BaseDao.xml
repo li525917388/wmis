@@ -3,8 +3,13 @@
 
 <mapper namespace="com.ldh.hplus.api.util.BaseDao">
 	
-	<select id="getBean" resultType="java.util.Map" parameterType="java.util.Map">
-		select * from ${table}
+	<!--  -->
+	<select id="getBean" resultType="java.util.Map" parameterType="com.ldh.hplus.common.util.BaseParameterType">
+		select * from ${table} where id=#{id}
+	</select>
+	
+	<select id="getAllList" resultType="java.util.Map" parameterType="java.lang.String">
+		select * from user
 	</select>
 
 </mapper>

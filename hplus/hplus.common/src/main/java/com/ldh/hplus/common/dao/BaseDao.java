@@ -3,7 +3,7 @@ package com.ldh.hplus.common.dao;
 import java.util.List;
 import java.util.Map;
 
-import com.ldh.hplus.common.model.BaseDaoPara;
+import com.ldh.hplus.common.util.BaseParameterType;
 
 
 /**
@@ -13,6 +13,17 @@ import com.ldh.hplus.common.model.BaseDaoPara;
  */
 public interface BaseDao<T> {
 	
-	public List<Map<String, Object>> getBean(BaseDaoPara bdp);
+	/**
+	 * 
+	 * @param bpt
+	 * @return
+	 */
+	public List<Map<String, Object>> getBean(BaseParameterType bpt);
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public List<Map<String, Object>> getAllList(String table);
 
 }

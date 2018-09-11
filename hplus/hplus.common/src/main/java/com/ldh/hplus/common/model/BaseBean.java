@@ -1,12 +1,17 @@
 package com.ldh.hplus.common.model;
 
+import com.ldh.hplus.common.util.LDH_Field;
+import com.ldh.hplus.common.util.LDH_Table;
+
 /**
  * 基础bean
- * @author 8
+ * @author ldh
  *
  */
+@LDH_Table
 public class BaseBean {
 
+	@LDH_Field("id")
 	private Long id;
 
 	public Long getId() {
