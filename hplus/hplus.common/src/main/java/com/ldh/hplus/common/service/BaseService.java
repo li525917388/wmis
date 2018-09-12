@@ -22,4 +22,29 @@ public interface BaseService<T> {
 	 * @return
 	 */
 	public List<T> queryAllList();
+	
+	
+	/**
+	 * 插入数据
+	 * @param t
+	 * @return
+	 */
+	public long insert(T t);
+	
+	
+	
+	/**
+	 * 删除
+	 * @return
+	 */
+	public int delete(long id);
+	
+	
+	
+	/**
+	 * 更新
+	 * @param t
+	 * @return
+	 */
+	public long update(T t);
 }

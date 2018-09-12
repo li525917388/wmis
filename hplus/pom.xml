@@ -7,7 +7,7 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
   
-  <!-- Spring boot 父引�??-->
+  <!-- Spring boot 父引�??-->
   <parent>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-parent</artifactId>
@@ -60,6 +60,14 @@
           <groupId>mysql</groupId>
           <artifactId>mysql-connector-java</artifactId>
       </dependency>
+      
+      
+      <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+	  <dependency>
+	    <groupId>com.google.code.gson</groupId>
+	    <artifactId>gson</artifactId>
+	  </dependency>
+	      
   </dependencies>
 
   

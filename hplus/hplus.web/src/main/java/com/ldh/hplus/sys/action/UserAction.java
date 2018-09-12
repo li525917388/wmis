@@ -1,13 +1,12 @@
 package com.ldh.hplus.sys.action;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ldh.hplus.common.action.BaseAction;
+import com.ldh.hplus.common.service.BaseService;
 import com.ldh.hplus.sys.pojo.User;
 import com.ldh.hplus.sys.service.UserService;
 
@@ -17,7 +16,7 @@ import com.ldh.hplus.sys.service.UserService;
  *
  */
 @Controller
-@RequestMapping("sys/user")
+@RequestMapping("/sys/user")
 public class UserAction extends BaseAction<User> {
 
 	@Resource
@@ -33,11 +32,10 @@ public class UserAction extends BaseAction<User> {
 	}
 
 	@Override
-	public List<User> getList() {
+	public BaseService<User> getService() {
 		// TODO Auto-generated method stub
-		List<User> list = userService.queryAllList();
-		
-		return list;
+		return userService;
 	}
+
 
 }

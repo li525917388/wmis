@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.ldh.hplus.api.util.BaseDao">
+<mapper namespace="com.ldh.hplus.common.dao.BaseDao">
 	
 	<!--  -->
 	<select id="getBean" resultType="java.util.Map" parameterType="com.ldh.hplus.common.util.BaseParameterType">
@@ -9,7 +9,38 @@
 	</select>
 	
 	<select id="getAllList" resultType="java.util.Map" parameterType="String">
-		select * from ${_parameter}
+		select * from ${table}
 	</select>
+	
+	<!-- 插入 -->
+	<insert id="insert" parameterType="com.ldh.hplus.common.util.BaseInsert">
+		insert into ${table} 
+		(
+		<foreach collection="fieldList" item="field" separator=",">
+			${field}
+		</foreach>
+		) 
+		value(
+		<foreach collection="valueList" item="value" separator=",">
+			#{value}
+		</foreach>
+		)
+	</insert>
 
+	<!-- 删除 -->
+	<delete id="delete" parameterType="Long">
+		delete from ${table} where id=#{id}
+	</delete>
+	
+	<!-- 更新 -->
+	<update id="update" parameterType="com.ldh.hplus.common.util.BaseUpdate">
+		update ${table} set 
+		<foreach collection="data.entrySet()" item="value" index="key" separator=",">
+			<if test="null != value">
+			${key}=#{value } 
+			</if>
+			
+		</foreach> 
+		where id=#{id}
+	</update>
 </mapper>

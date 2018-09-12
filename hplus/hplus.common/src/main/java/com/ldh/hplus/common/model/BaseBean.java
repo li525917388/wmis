@@ -12,7 +12,7 @@ import com.ldh.hplus.common.util.LDH_Table;
 public class BaseBean {
 
 	@LDH_Field("id")
-	private Long id;
+	private long id;
 
 	public Long getId() {
 		return id;

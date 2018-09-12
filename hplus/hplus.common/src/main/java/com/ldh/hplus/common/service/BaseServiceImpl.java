@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -14,7 +15,10 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.ldh.hplus.common.dao.BaseDao;
+import com.ldh.hplus.common.err.MyRunException;
+import com.ldh.hplus.common.util.BaseInsert;
 import com.ldh.hplus.common.util.BaseParameterType;
+import com.ldh.hplus.common.util.BaseUpdate;
 
 @Service("BaseService")
 public class BaseServiceImpl<T> implements BaseService<T> {
@@ -34,6 +38,10 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 		return args[0].getTypeName();
 	}
 	
+	/**
+	 * 获得表名
+	 * @return
+	 */
 	public String getTableName(){
 		
 		String name = getBeanType();
@@ -73,6 +81,7 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 		return bpt;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public T getBeanById(long id) {
 
@@ -80,12 +89,65 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 
 		BaseParameterType bpt = getPara();
 		bpt.setId(id);
+		//bpt.setTable(getTableName());
 		
-		List<Map<String, Object>> list = dao.getBean(bpt);
+		Map<String, Object> res = dao.getBean(bpt);
 		
-		System.out.println(list);
+		Set<Entry<String, Object>> entrys = res.entrySet();
 		
-		return null;
+		Object o = null;
+		
+		Class<?> clazz = null;
+		
+		try {
+			clazz = Class.forName(getBeanType());
+		} catch (ClassNotFoundException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		
+		try {
+			o = clazz.newInstance();
+			
+			for(Entry<String, Object> entry : entrys){
+				String key = entry.getKey();		//字段名
+				Object value = entry.getValue();	//字段值
+				
+				Field f;
+				
+				String name = toProperty(key);
+				
+				try {
+					f = clazz.getDeclaredField(name);	//找属性
+					
+					f.setAccessible(true);
+					
+					f.set(o, value);
+					
+				} catch (NoSuchFieldException e1) {
+					
+					System.err.println("在" + clazz.getName() + "中没有找到属性:" + name);
+					
+					Field pf = this.getSurperField(clazz,name);
+					
+					pf.set(o, value);
+					
+				} catch (SecurityException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+			
+		}  catch (InstantiationException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IllegalAccessException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} 
+		
+		return (T) o;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -134,7 +196,9 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 						
 						System.err.println("在" + clazz.getName() + "中没有找到属性:" + name);
 						
-						this.getSurperClass(clazz,name,value,o);
+						Field pf = this.getSurperField(clazz,name);
+						
+						pf.set(o, value);
 						
 					} catch (SecurityException e) {
 						// TODO Auto-generated catch block
@@ -183,7 +247,33 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 	}
 	
 	
-	public void getSurperClass(Class<?> clazz,String name, Object value, Object o){
+	/**
+	 * 转数据库字段
+	 * @param property
+	 * @return
+	 */
+	private String toField(String property){
+		
+		StringBuffer sb = new StringBuffer(property.charAt(0) + "");
+		
+		for(int i = 1; i < property.length(); i++){
+			
+			char c = property.charAt(i);
+			
+			if(c >= 'A' && c <= 'Z'){
+				
+				sb.append(("_" + c).toLowerCase());
+			}else{
+				
+				sb.append(c);
+			}
+		}
+		
+		return sb.toString();
+	}
+	
+	
+	public Field getSurperField(Class<?> clazz,String name){
 		
 		Class<?> pclazz = clazz.getSuperclass();
 		
@@ -191,7 +281,7 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 		
 		if("Object".equals(pclazz.getSimpleName())){
 			
-			return;
+			return null;
 		}
 		
 		try {
@@ -200,23 +290,157 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 			
 			f.setAccessible(true);
 			
-			f.set(o, value);
+			return f;		
 			
 		} catch (NoSuchFieldException e) {
 			
 			System.err.println("在" + pclazz.getName() + "中没有找到属性:" + name);
 			
-			this.getSurperClass(pclazz,name,value,o);
+			return this.getSurperField(pclazz,name);
 			
 		} catch (SecurityException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} 
+		
+		return null;
+	}
+
+	@Override
+	public long insert(T t) {
+		List<String> fieldList = new ArrayList<String>();
+		List<Object> valueList = new ArrayList<Object>();
+		
+		BaseInsert bt = new BaseInsert();			//创建插入参数对象
+		
+		bt.setTable(getTableName());
+		
+		Class<? extends Object> clazz = t.getClass();
+		
+		Field[] fields = clazz.getDeclaredFields();		//获得所有属性
+		
+		for(int i = 0; i < fields.length; i++){
+			
+			fields[i].setAccessible(true); 			//设置私有属性公有
+			
+			fieldList.add(toField(fields[i].getName()));
+			try {
+				valueList.add(fields[i].get(t));
+			} catch (IllegalArgumentException | IllegalAccessException e) {
+				
+				e.printStackTrace();
+				throw new MyRunException();		//抛出自定义异常
+			}
+		}
+		
+		bt.setFieldList(fieldList);
+		bt.setValueList(valueList);
+		
+		return this.dao.insert(bt);
+	}
+
+	@Override
+	public int delete(long id) {
+		
+		BaseParameterType bpt = getPara();
+		bpt.setId(id);
+		
+		int res = dao.delete(bpt);
+		
+		return res;
+	}
+
+	@Override
+	public long update(T t) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		BaseUpdate bu = new BaseUpdate();
+		bu.setTable(getTableName());
+		
+		Class<? extends Object> clazz = t.getClass();
+		
+		Field[] fields = clazz.getDeclaredFields();		//获得所有属性
+		
+		for(int i = 0; i < fields.length; i++){
+			
+			fields[i].setAccessible(true); 			//设置私有属性公有
+
+			try {
+				map.put(toField(fields[i].getName()),fields[i].get(t));		//添加到集合
+				
+			} catch (IllegalArgumentException | IllegalAccessException e) {
+				
+				e.printStackTrace();
+				throw new MyRunException();		//抛出自定义异常
+			}
+		}
+		
+		long id = 0;
+		
+		///找ID
+		try {
+			
+			Field f = clazz.getDeclaredField("id");		//搜索ID属性
+			
+			f.setAccessible(true);
+			
+			id = f.getLong(t);
+
 		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
+
+			e.printStackTrace();
+		} catch (NoSuchFieldException e) {
+			
+			//找父类的方法
+			Field pf = getSurperField(clazz,"id");
+
+			try {
+				
+				id = pf.getLong(t);
+				
+			} catch (IllegalArgumentException e1) {
+
+				e1.printStackTrace();
+			} catch (IllegalAccessException e1) {
+
+				e1.printStackTrace();
+			}
+			
+		} catch (SecurityException e) {
+
 			e.printStackTrace();
 		}
+		
+		bu.setData(map);
+		bu.setId(id);
+		
+		return dao.update(bu);
+	}
+	
+	public void getSuperId(Class<?> clazz){
+		
+		Class<?> pclazz = clazz.getSuperclass();
+		
+		Field f = null;
+		
+		try {
+			
+			f = clazz.getDeclaredField("id");
+			f.setAccessible(true);
+			
+			return;
+		} catch (NoSuchFieldException e) {
+			
+			getSuperId(pclazz);
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		//搜索ID属性
+		
+		
+		
 	}
 }
