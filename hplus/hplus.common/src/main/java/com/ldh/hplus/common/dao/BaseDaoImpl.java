@@ -3,14 +3,12 @@ package com.ldh.hplus.common.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.springframework.stereotype.Repository;
 
 import com.ldh.hplus.common.util.BaseParameterType;
 
-
-@Repository
 public class BaseDaoImpl<T> implements BaseDao<T> {
 
 	private SqlSessionFactory sqlSessionFactory;
@@ -33,7 +31,7 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	}
 
 	@Override
-	public List<Map<String, Object>> getAllList(String table) {
+	public List<Map<String, Object>> getAllList(@Param("table")String table) {
 		
 		SqlSession sqlSession = sqlSessionFactory.openSession();
 		

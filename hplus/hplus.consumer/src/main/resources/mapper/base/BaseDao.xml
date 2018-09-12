@@ -8,8 +8,8 @@
 		select * from ${table} where id=#{id}
 	</select>
 	
-	<select id="getAllList" resultType="java.util.Map" parameterType="java.lang.String">
-		select * from user
+	<select id="getAllList" resultType="java.util.Map" parameterType="String">
+		select * from ${_parameter}
 	</select>
 
 </mapper>

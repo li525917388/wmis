@@ -1,6 +1,8 @@
 package com.ldh.hplus.sys.service.impl;
 
 
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Service;
 
 import com.ldh.hplus.common.service.BaseServiceImpl;
@@ -11,7 +13,7 @@ import com.ldh.hplus.sys.service.UserService;
 @Service("UserService")
 public class UserServiceImpl extends BaseServiceImpl<User> implements UserService {
 
-	
+	@Resource
 	private UserDao userDao;
 	
 	public UserDao getUserDao() {

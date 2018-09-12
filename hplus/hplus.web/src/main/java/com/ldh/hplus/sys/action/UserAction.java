@@ -28,8 +28,8 @@ public class UserAction extends BaseAction<User> {
 		
 		User user = new User();
 		user.setName("aaa");
-		user.setPwd("123");
-		//userService.addUser(user);
+		user.setPwd("1314");
+		userService.addUser(user);
 	}
 
 	@Override

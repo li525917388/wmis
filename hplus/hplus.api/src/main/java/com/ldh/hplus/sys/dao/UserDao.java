@@ -1,6 +1,5 @@
 package com.ldh.hplus.sys.dao;
 
-import com.ldh.hplus.common.dao.BaseDao;
 import com.ldh.hplus.sys.pojo.User;
 
 /**
@@ -8,7 +7,7 @@ import com.ldh.hplus.sys.pojo.User;
  * @author 8
  *
  */
-public interface UserDao extends BaseDao<User> {
+public interface UserDao {
 
 	/**
 	 * 添加用户

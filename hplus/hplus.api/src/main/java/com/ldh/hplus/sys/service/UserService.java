@@ -6,7 +6,7 @@ import com.ldh.hplus.sys.pojo.User;
 
 /**
  * 用户service
- * @author 8
+ * @author ldh
  *
  */
 public interface UserService extends BaseService<User> {
