@@ -13,6 +13,16 @@ public class User extends BaseBean {
 	private String name;
 	
 	private String pwd;
+	
+	private String account;
+
+	public String getAccount() {
+		return account;
+	}
+
+	public void setAccount(String account) {
+		this.account = account;
+	}
 
 	public String getName() {
 		return name;
