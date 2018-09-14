@@ -14,5 +14,5 @@ public interface UserDao {
 	 * @param user
 	 * @return
 	 */
-	public long addUser(User user);
+	public User login(User user);
 }

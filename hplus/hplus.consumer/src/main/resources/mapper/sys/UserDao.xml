@@ -4,9 +4,17 @@
 <mapper namespace="com.ldh.hplus.sys.dao.UserDao">
 	
 
-	<!--  -->
-	<insert id="addUser" parameterType="user">
-		insert into user(name,pwd) values(#{name},#{pwd})
-	</insert>
+	<!-- 登录 -->
+	<select id="login" parameterType="user" resultType="user">
+		select 
+		u.id,
+		u.account,
+		u.name,
+		u.icon,
+		u.sex 
+		from user u 
+		where u.account=#{account} 
+		and u.pwd=MD5(#{pwd})
+	</select>
 
 </mapper>

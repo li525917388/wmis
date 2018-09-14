@@ -159,4 +159,18 @@ public abstract class BaseAction<T> {
 		return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
 	}
 
+	
+	public void returnJson(Object o) throws IOException{
+		
+		Gson gson = new Gson();
+		
+		String json = gson.toJson(o);
+		
+		returnJson(json);
+	}
+	
+	public void returnJson(String str) throws IOException{
+		
+		getResponse().getWriter().print(str);
+	}
 }

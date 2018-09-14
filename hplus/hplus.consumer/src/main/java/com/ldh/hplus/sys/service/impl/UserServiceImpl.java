@@ -27,9 +27,16 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 
 
 	@Override
-	public long addUser(User user) {
-		// TODO Auto-generated method stub
-		return userDao.addUser(user);
+	public User login(User user) {
+		
+		User u = userDao.login(user);
+		
+		if(u != null && u.getId() != 0){
+			
+			return u;
+		}
+		
+		return null;
 	}
 
 }
