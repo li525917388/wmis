@@ -16,5 +16,5 @@ public interface UserService extends BaseService<User> {
 	 * @param user
 	 * @return
 	 */
-	public long addUser(User user);
+	public User login(User user);
 }

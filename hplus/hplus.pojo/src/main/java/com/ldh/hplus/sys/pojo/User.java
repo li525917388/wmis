@@ -10,11 +10,15 @@ import com.ldh.hplus.common.model.BaseBean;
  */
 public class User extends BaseBean {
 
-	private String name;
+	private String name;		//姓名
 	
-	private String pwd;
+	private String pwd;			//密码
 	
-	private String account;
+	private String account;		//账号
+	
+	private int sex;			//性别
+	
+	private String icon;		//头像
 
 	public String getAccount() {
 		return account;
@@ -38,6 +42,22 @@ public class User extends BaseBean {
 
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
+	}
+
+	public int getSex() {
+		return sex;
+	}
+
+	public void setSex(int sex) {
+		this.sex = sex;
+	}
+
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
 	}
 	
 	
