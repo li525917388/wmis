@@ -43,4 +43,13 @@
 		</foreach> 
 		where id=#{id}
 	</update>
+	
+	
+	<select id="getListByFilter" resultType="java.util.Map" parameterType="com.ldh.hplus.common.util.BaseParameterType">
+		select * from ${table}
+	</select>
+	
+	<select id="getCountByFilter" resultType="Long" parameterType="com.ldh.hplus.common.util.BaseParameterType">
+		select * from ${table}
+	</select>
 </mapper>

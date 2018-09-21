@@ -16,9 +16,11 @@ import org.springframework.stereotype.Service;
 
 import com.ldh.hplus.common.dao.BaseDao;
 import com.ldh.hplus.common.err.MyRunException;
+import com.ldh.hplus.common.util.BaseGrid;
 import com.ldh.hplus.common.util.BaseInsert;
 import com.ldh.hplus.common.util.BaseParameterType;
 import com.ldh.hplus.common.util.BaseUpdate;
+import com.ldh.hplus.common.util.Filter;
 
 @Service("BaseService")
 public class BaseServiceImpl<T> implements BaseService<T> {
@@ -198,7 +200,13 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 						
 						Field pf = this.getSurperField(clazz,name);
 						
-						pf.set(o, value);
+						if(pf == null){
+							
+							
+						}else{
+							
+							pf.set(o, value);
+						}	
 						
 					} catch (SecurityException e) {
 						// TODO Auto-generated catch block
@@ -442,5 +450,17 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 		
 		
 		
+	}
+
+	@Override
+	public BaseGrid getGridList(Filter filter,int page,int pageSize) {
+		
+		BaseParameterType bpt = getPara();
+		
+		bpt.setStatr((page - 1) * pageSize);
+		bpt.setEnd(page * pageSize);
+		bpt.setFielter(filter);
+		
+		return null;
 	}
 }

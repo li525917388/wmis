@@ -3,19 +3,15 @@ package com.ldh.hplus.common.action;
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.google.gson.Gson;
 import com.ldh.hplus.common.service.BaseService;
+import com.ldh.hplus.common.util.BaseGrid;
 
 
 
@@ -24,7 +20,7 @@ import com.ldh.hplus.common.service.BaseService;
  * @author ldh
  *
  */
-public abstract class BaseAction<T> {
+public abstract class BaseAction<T> extends SuperAction{
 	
 	
 	/**
@@ -42,7 +38,7 @@ public abstract class BaseAction<T> {
 	 */
 	@RequestMapping(method=RequestMethod.GET)
 	@ResponseBody
-	public void list(T base) throws IOException{
+	public void list() throws IOException{
 		System.out.println("查找实体列表");
 		
 		List<T> list = getService().queryAllList();
@@ -56,7 +52,14 @@ public abstract class BaseAction<T> {
 		
 		Gson gson = new Gson();
 		
-		String json = gson.toJson(list);
+		BaseGrid<T> bg = new BaseGrid<T>();
+		
+		bg.setData(list);
+		bg.setCode(200);
+		bg.setCount(120);
+		bg.setMsg("success");
+		
+		String json = gson.toJson(bg);
 		
 		System.out.println(json);
 		
@@ -138,39 +141,4 @@ public abstract class BaseAction<T> {
 		System.out.println("myModel-----");
 	}
 	
-	
-	
-	/**
-	 * 获取request
-	 * @return
-	 */
-	public HttpServletRequest getRequest(){
-		
-		return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-	}
-	
-	
-	/**
-	 * 获取response
-	 * @return
-	 */
-	public HttpServletResponse getResponse(){
-		
-		return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
-	}
-
-	
-	public void returnJson(Object o) throws IOException{
-		
-		Gson gson = new Gson();
-		
-		String json = gson.toJson(o);
-		
-		returnJson(json);
-	}
-	
-	public void returnJson(String str) throws IOException{
-		
-		getResponse().getWriter().print(str);
-	}
 }

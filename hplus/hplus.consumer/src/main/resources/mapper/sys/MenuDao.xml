@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ldh.hplus.sys.dao.MenuDao">
+	
+
+	<!-- 获取主菜单 -->
+	<select id="getHostMenus" parameterType="Long" resultType="menu">
+		select 
+		m.id,
+		m.menu_name as menuName,
+		m.menu_code as menuCode,
+		m.menu_type as menuType,
+		m.menu_order as menuOrder,
+		m.url,
+		m.icon,
+		m.open_type as openType,
+		m.describe 
+		from menu m 
+		join 
+			(select rm.mid from user_role ur 
+			 left join role_menu rm on rm.rid=ur.rid 
+			 where ur.uid=#{uid} 
+			 group by rm.mid
+			)t
+		on t.mid=m.id 
+		where m.menu_type=1
+		order by m.menu_order
+		
+	</select>
+	
+	
+	<!-- 获取子菜单 -->
+	<select id="getChildMenus" parameterType="java.util.Map" resultType="menu">
+		select 
+		m.id,
+		m.menu_name as menuName,
+		m.menu_code as menuCode,
+		m.menu_type as menuType,
+		m.menu_order as menuOrder,
+		m.url,
+		m.icon,
+		m.open_type as openType,
+		m.describe  
+		from menu m 
+		join 
+			(select rm.mid from user_role ur 
+			 left join role_menu rm on rm.rid=ur.rid 
+			 where ur.uid=#{uid} 
+			 group by rm.mid
+			)t
+		on t.mid=m.id 
+		where m.menu_type not in('1')
+		and pcode=#{pcode}
+		order by m.menu_order
+	</select>
+
+</mapper>

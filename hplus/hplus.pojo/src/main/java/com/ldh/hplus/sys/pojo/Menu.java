@@ -1,11 +1,16 @@
 package com.ldh.hplus.sys.pojo;
 
+import java.util.List;
+
+import com.ldh.hplus.common.model.BaseBean;
+import com.ldh.hplus.common.util.LDH_Temp;
+
 /**
  * 菜单类
  * @author ldh	
  *
  */
-public class Menu {
+public class Menu extends BaseBean{
 
 	private String menuName;		//菜单名称
 	
@@ -13,7 +18,7 @@ public class Menu {
 	
 	private String url;				//菜单地址
 	
-	private String menuType;		//菜单类型
+	private int menuType;			//菜单类型
 	
 	private String icon;			//菜单样式
 	
@@ -23,7 +28,10 @@ public class Menu {
 	
 	private String openType;		//菜单打开方式
 	
-	private Long menuOrder;			//菜单顺序
+	private int menuOrder;			//菜单顺序
+	
+	@LDH_Temp
+	private List<Menu> childList;	//子菜单
 
 	public String getMenuName() {
 		return menuName;
@@ -49,11 +57,11 @@ public class Menu {
 		this.url = url;
 	}
 
-	public String getMenuType() {
+	public int getMenuType() {
 		return menuType;
 	}
 
-	public void setMenuType(String menuType) {
+	public void setMenuType(int menuType) {
 		this.menuType = menuType;
 	}
 
@@ -89,12 +97,20 @@ public class Menu {
 		this.openType = openType;
 	}
 
-	public Long getMenuOrder() {
+	public int getMenuOrder() {
 		return menuOrder;
 	}
 
-	public void setMenuOrder(Long menuOrder) {
+	public void setMenuOrder(int menuOrder) {
 		this.menuOrder = menuOrder;
+	}
+
+	public List<Menu> getChildList() {
+		return childList;
+	}
+
+	public void setChildList(List<Menu> childList) {
+		this.childList = childList;
 	}
 	
 }

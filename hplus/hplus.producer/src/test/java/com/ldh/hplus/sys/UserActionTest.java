@@ -19,9 +19,9 @@ public class UserActionTest {
 	@Test
 	public void test() throws IOException, ParseException{
 		
-		//String id = login();
+		login();
 		
-		list("ldh");
+		//list("ldh");
 		
 	}
 	

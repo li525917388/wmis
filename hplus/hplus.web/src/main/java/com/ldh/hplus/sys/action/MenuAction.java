@@ -2,20 +2,20 @@ package com.ldh.hplus.sys.action;
 
 import javax.annotation.Resource;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.ldh.hplus.common.action.BaseAction;
 import com.ldh.hplus.common.service.BaseService;
 import com.ldh.hplus.sys.pojo.Menu;
-import com.ldh.hplus.sys.service.MenuServcice;
+import com.ldh.hplus.sys.service.MenuService;
 
-@RestController
+@Controller
 @RequestMapping("sys/menu")
 public class MenuAction extends BaseAction<Menu>{
 	
 	@Resource
-	MenuServcice menuServcice;
+	MenuService menuServcice;
 
 	@Override
 	public BaseService<Menu> getService() {
@@ -24,5 +24,14 @@ public class MenuAction extends BaseAction<Menu>{
 	}
 
 	
+	/**
+	 * 列表页面
+	 * @return
+	 */
+	@RequestMapping("list")
+	public String toList(){
+		
+		return "sys/menu/menuList";
+	}
 	
 }

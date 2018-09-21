@@ -11,7 +11,7 @@
 	<form action="">
 		用户：<input name="account" id="account" /><br>
 		密码：<input name="pwd" id="pwd" /><br>
-		<button id="login_btn">登录</button>
+		<button type="button" id="login_btn">登录</button>
 	</form>
 	
 	<script src="static/js/jquery.min.js"></script>
@@ -29,8 +29,13 @@
 				type: "post",
 				dataType: "json",
 				success: function(res){
+
+					if(res.isSuccess == 1){
+						window.location.href = "/hplus/main";
+					}else{
+						alert(res.msg);
+					}
 					
-					alert(res);
 				}
 			});	
 		});

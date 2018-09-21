@@ -54,4 +54,19 @@ public interface BaseDao<T> {
 	 * @return
 	 */
 	public int update(BaseUpdate bu);
+	
+	
+	/**
+	 * 获得l列表数据
+	 * @return
+	 */
+	public List<Map<String, Object>> getListByFilter(BaseParameterType parameterType);
+	
+	
+	
+	/**
+	 * 获得列表总记录
+	 * @return
+	 */
+	public long getCountByFilter(BaseParameterType parameterType);
 }

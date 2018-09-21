@@ -13,6 +13,10 @@ public class BaseParameterType {
 	private long id;					//主键
 	
 	private Filter fielter;			//
+	
+	private long statr;
+	
+	private long end;
 
 	public String getTable() {
 		return table;
@@ -36,6 +40,22 @@ public class BaseParameterType {
 
 	public void setFielter(Filter fielter) {
 		this.fielter = fielter;
+	}
+
+	public long getStatr() {
+		return statr;
+	}
+
+	public void setStatr(long statr) {
+		this.statr = statr;
+	}
+
+	public long getEnd() {
+		return end;
+	}
+
+	public void setEnd(long end) {
+		this.end = end;
 	}
 
 	

@@ -41,6 +41,11 @@ public class UserAction extends BaseAction<User> {
 	}
 	
 
+	/**
+	 * 登录
+	 * @param user
+	 * @throws IOException
+	 */
 	@RequestMapping("login")
 	@ResponseBody
 	public void login(User user) throws IOException{
@@ -51,7 +56,7 @@ public class UserAction extends BaseAction<User> {
 		
 		if(u == null){
 			
-			returnJson(null);
+			resError("301", "用户或密码错误");
 			
 			return;
 		}
@@ -71,6 +76,6 @@ public class UserAction extends BaseAction<User> {
 		
 		jedis.close();
 		
-		returnJson(sessionId);
+		resSuccess();
 	}
 }

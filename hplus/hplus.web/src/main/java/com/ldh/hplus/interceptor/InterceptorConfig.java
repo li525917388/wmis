@@ -1,7 +1,6 @@
 package com.ldh.hplus.interceptor;
 
 import java.util.Date;
-import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -58,22 +57,24 @@ public class InterceptorConfig implements HandlerInterceptor {
 			Object arg2) throws Exception {
 		System.out.println("preHandle" + name);
 		
+		//获取sessionId
 		String session = request.getParameter("sessionId");
 		
 		System.out.println(session);
 		
+		//从session里查找当前会话用户
 		User user = (User) request.getSession().getAttribute(BaseConstants.SESSION_USER);
 		
-		Enumeration<String> a = request.getSession().getAttributeNames();
-		
-		while(a.hasMoreElements()){
-			
-			String name = a.nextElement();
-			
-			System.out.println(name);
-		}
-		
+		//判断是否登录
 		if(user == null){
+			
+			if(session == null){
+				
+				response.sendRedirect(request.getContextPath()+"/login.jsp");
+				
+				return false;
+			}
+			
 			//打开Redis
 			Jedis jedis = new Jedis(redis_host,redis_port);
 			
@@ -84,7 +85,7 @@ public class InterceptorConfig implements HandlerInterceptor {
 			
 			if(user_session == null){
 				
-				response.sendRedirect(request.getContextPath()+"/index.jsp");	
+				response.sendRedirect(request.getContextPath()+"/login.jsp");	
 
 			}else{
 				
@@ -106,7 +107,7 @@ public class InterceptorConfig implements HandlerInterceptor {
 			return true;
 		}
 		
-		
+		response.sendRedirect(request.getContextPath()+"/login.jsp");
 		return false;
 	}
 

@@ -2,6 +2,9 @@ package com.ldh.hplus.common.service;
 
 import java.util.List;
 
+import com.ldh.hplus.common.util.BaseGrid;
+import com.ldh.hplus.common.util.Filter;
+
 /**
  * 基础service
  * @author 8
@@ -47,4 +50,13 @@ public interface BaseService<T> {
 	 * @return
 	 */
 	public long update(T t);
+	
+	
+	
+	/**
+	 * 获得数据列表
+	 * @param filter
+	 * @return
+	 */
+	public BaseGrid getGridList(Filter filter,int page,int pageSize);
 }
