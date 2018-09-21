@@ -1,9 +1,8 @@
 <%--
-  Created by IntelliJ IDEA.
+       菜单管理（menu）
   User: Li Dehuan
-  Date: 2017/3/14
+  Date: 2018/9/21
   Time: 11:02
-  To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"
 	pageEncoding="UTF-8"%>
@@ -13,86 +12,57 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>开始使用layui</title>
-<link rel="stylesheet" href="${contextPath }/static/layui/css/layui.css">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>菜单管理</title>
+
+	<!-- 外联样式表 -->
+	<link rel="shortcut icon" href="favicon.ico">
+	<link rel="stylesheet" href="${contextPath}/static/Hplus/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+	<link rel="stylesheet" href="${contextPath }/static/Hplus/css/plugins/jqgrid/ui.jqgrid.css">
+	<link rel="stylesheet" href="${contextPath}/static/Hplus/css/style.css?v=4.1.0" >
+	
 </head>
 <body style="width: 100%;">
 	<!-- 你的HTML代码 -->
-	<table id="demo" lay-filter="test"></table>
-	<script src="${contextPath }/static/layui/layui.js"></script>
+	<table id="table_list_1"></table>   
+    <div id="gridpager"></div>
+	
+	
+	<!-- js -->
+	<script src="${contextPath}/static/Hplus/js/jquery.min.js?v=2.1.4"></script>
+	<script src="${contextPath }/static/Hplus/js/plugins/jqgrid/jquery.jqGrid.min.js"></script>
+	<!-- 国际化jqGrid  js -->
+	<script src="${contextPath }/static/Hplus/js/plugins/jqgrid/i18n/grid.locale-cn.js"></script>
 	
 	<script>
-		layui.use('table', function() {
-
-			var table = layui.table;
-
-			//第一个实例
-			table.render({
-				elem : '#demo',
-				height : "full-100",
-				cellMinWidth: 80,
-				url : '${contextPath }/sys/menu', //数据接口
-				skin : "row",	//用于设定表格风格，若使用默认风格不设置该属性即可.line （行边框风格）  row （列边框风格）  nob （无边框风格）
-				even : true,
-				page : true,  //开启分页
-				response: {
-				    statusName: 'code' //规定数据状态的字段名称，默认：code
-				    ,statusCode: 200 //规定成功的状态码，默认：0
-				    ,msgName: 'msg' //规定状态信息的字段名称，默认：msg
-				    ,countName: 'count' //规定数据总数的字段名称，默认：count
-				    ,dataName: 'data' //规定数据列表的字段名称，默认：data
-			  	},
-				cols : [ [ //表头
-				{
-					field : 'id',
-					title : 'ID',
-					width : 80,
-					sort : true
-				}, 
-				{
-					field : 'menuName',
-					title : '菜单名称',
-					//fixed : 'left',
-					width : 140
-				}, 
-				{
-					field : 'menuCode',
-					title : '菜单编码',
-					width : 140,
-					sort : true
-				}, 
-				{
-					field : 'menuType',
-					title : '菜单类型',
-					width : 100,
-					sort : true
-				}, 
-				{
-					field : 'url',
-					title : '地址',
-					width : 200
-				}, 
-				{
-					field : 'icon',
-					title : '样式',
-					width : 150
-				}, 
-				{
-					field : 'pcode',
-					title : '上级菜单',
-					width : 140
-				}, 
-				{
-					field : 'menuOrder',
-					title : '顺序',
-					width : 80
-				}] ]
-			});
-
-		});
+	$.jgrid.defaults.styleUI = "Bootstrap";
+	  
+	$("#table_list_1").jqGrid({
+        url: "${contextPath }/sys/menu",
+        datatype: "json",
+        height: 250,
+        autowidth: true,
+        shrinkToFit: true,
+        rowNum: 14,
+        rowList: [10, 20, 30],
+        colNames: ["id", "菜单编码", "菜单名称", "菜单类型", "url", "样例","上级菜单","顺序","描述"],
+        colModel: [
+        	{name: "id", index: "id", width: 60, sorttype: "int"},
+        	{name: "menuCode",index: "menuCode",width: 90 },
+        	{name: "menuName", index: "menuName", width: 100 }, 
+        	{name: "menuType", index: "menuType", width: 80  }, 
+        	{name: "url", index: "url", width: 80 }, 
+        	{name: "icon",index: "icon",width: 80}, 
+        	{name: "pcode",index: "pcode",width: 80}, 
+        	{name: "menuOrder",index: "menuOrder",width: 80}, 
+        	{name: "describe",index: "describe",width: 80}
+        ],
+        pager: "#gridpager",
+        viewrecords: true,
+        multiselect: true,	//多选
+        hidegrid: false
+    });
 	</script>
 </body>
 </html>

@@ -54,10 +54,9 @@ public abstract class BaseAction<T> extends SuperAction{
 		
 		BaseGrid<T> bg = new BaseGrid<T>();
 		
-		bg.setData(list);
-		bg.setCode(200);
-		bg.setCount(120);
-		bg.setMsg("success");
+		bg.setRows(list);
+		bg.setPage(1);
+		bg.setRecords(200);
 		
 		String json = gson.toJson(bg);
 		

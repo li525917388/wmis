@@ -78,4 +78,15 @@ public class UserAction extends BaseAction<User> {
 		
 		resSuccess();
 	}
+	
+	
+	/**
+	 * 列表页面
+	 * @return
+	 */
+	@RequestMapping("list")
+	public String toList(){
+		
+		return "sys/user/userList";
+	}
 }
