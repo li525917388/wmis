@@ -58,5 +58,5 @@ public interface BaseService<T> {
 	 * @param filter
 	 * @return
 	 */
-	public BaseGrid getGridList(Filter filter,int page,int pageSize);
+	public BaseGrid<T> getGridList(Filter filter,int page,int pageSize);
 }

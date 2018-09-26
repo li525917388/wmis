@@ -24,6 +24,14 @@
 	
 </head>
 <body style="width: 100%;">
+
+	<div class="btn_panel">
+		<button type="button" class="btn btn-sm btn-primary">新增</button>
+		<button type="button" class="btn btn-sm btn-info">编辑</button>
+		<button type="button" class="btn btn-sm btn-danger">删除</button>
+		<button type="button" class="btn btn-sm btn-success">查看</button>
+	</div>
+	
 	<!-- 你的HTML代码 -->
 	<table id="table_list_1"></table>   
     <div id="gridpager"></div>

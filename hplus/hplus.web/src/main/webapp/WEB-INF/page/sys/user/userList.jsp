@@ -28,6 +28,11 @@
 	
 </head>
 <body>
+	
+	<div class="btn_panel">
+		 <button class="btn btn-default  dim " type="button">1<i class="fa fa-star"></i></button>
+	</div>
+	
 	<table id="table_list_1"></table>   
     <div id="gridpager"></div>
 	

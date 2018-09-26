@@ -453,7 +453,7 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 	}
 
 	@Override
-	public BaseGrid getGridList(Filter filter,int page,int pageSize) {
+	public BaseGrid<T> getGridList(Filter filter,int page,int pageSize) {
 		
 		BaseParameterType bpt = getPara();
 		
