@@ -20,13 +20,14 @@
 	<link rel="shortcut icon" href="favicon.ico">
 	<link rel="stylesheet" href="${contextPath}/static/Hplus/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
 	<link rel="stylesheet" href="${contextPath }/static/Hplus/css/plugins/jqgrid/ui.jqgrid.css">
+	<link href="${contextPath}/static/Hplus/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
 	<link rel="stylesheet" href="${contextPath}/static/Hplus/css/style.css?v=4.1.0" >
 	
 </head>
 <body style="width: 100%;">
 
 	<div class="btn_panel">
-		<button type="button" class="btn btn-sm btn-primary">新增</button>
+		<button type="button" onclick="addBase()" class="btn btn-sm btn-primary">新增</button>
 		<button type="button" class="btn btn-sm btn-info">编辑</button>
 		<button type="button" class="btn btn-sm btn-danger">删除</button>
 		<button type="button" class="btn btn-sm btn-success">查看</button>
@@ -39,13 +40,14 @@
 	
 	<!-- js -->
 	<script src="${contextPath}/static/Hplus/js/jquery.min.js?v=2.1.4"></script>
+	<script src="${contextPath }/static/Hplus/js/plugins/layer/layer.min.js"></script>
 	<script src="${contextPath }/static/Hplus/js/plugins/jqgrid/jquery.jqGrid.min.js"></script>
 	<!-- 国际化jqGrid  js -->
 	<script src="${contextPath }/static/Hplus/js/plugins/jqgrid/i18n/grid.locale-cn.js"></script>
+	<!-- 公共js -->
+	<script src="${contextPath}/static/js/common.js?v=2.1.4"></script>
 	
 	<script>
-	$.jgrid.defaults.styleUI = "Bootstrap";
-	  
 	$("#table_list_1").jqGrid({
         url: "${contextPath }/sys/menu",
         datatype: "json",
@@ -71,6 +73,12 @@
         multiselect: true,	//多选
         hidegrid: false
     });
+	
+	//添加
+	function addBase(){
+		
+		openWindow("${contextPath }/sys/menu/edit/0");
+	}
 	</script>
 </body>
 </html>

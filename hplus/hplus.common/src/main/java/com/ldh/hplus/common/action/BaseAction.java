@@ -84,15 +84,7 @@ public abstract class BaseAction<T> extends SuperAction{
 		getResponse().getWriter().print(json);
 	}
 	
-	
-	@RequestMapping(value="/edit/{id}",method=RequestMethod.GET)
-	public String toEditPage(){
-		
-		
-		
-		return "/WEB-INF/page/user.jsp";
-	}
-	
+
 	
 	/**
 	 * 插入action方法

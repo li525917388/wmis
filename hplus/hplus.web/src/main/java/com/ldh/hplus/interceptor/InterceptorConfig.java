@@ -5,12 +5,12 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-
-import redis.clients.jedis.Jedis;
 
 import com.google.gson.Gson;
 import com.ldh.hplus.common.util.BaseConstants;
@@ -36,6 +36,9 @@ public class InterceptorConfig implements HandlerInterceptor {
 	
 	@Value("${ldh.redis.timeout}")
 	private long redis_timeout;
+	
+	@Autowired
+	StringRedisTemplate stringRedisTemplate;
 
 	@Override
 	public void afterCompletion(HttpServletRequest arg0,
@@ -76,12 +79,13 @@ public class InterceptorConfig implements HandlerInterceptor {
 			}
 			
 			//打开Redis
-			Jedis jedis = new Jedis(redis_host,redis_port);
+			//Jedis jedis = new Jedis(redis_host,redis_port);
 			
 			//获取user_session
-			String user_session = jedis.get(session);
+			String user_session = stringRedisTemplate.opsForValue().get(session);
+			
 
-			jedis.close();//关闭连接
+			//jedis.close();//关闭连接
 			
 			if(user_session == null){
 				
