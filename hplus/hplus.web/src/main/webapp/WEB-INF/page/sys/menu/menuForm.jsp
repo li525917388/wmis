@@ -21,41 +21,41 @@ Li Dehuan
 <body style="padding-top: 10px;">
 	<form class="form-horizontal m-t" id="signupForm">
         <div class="form-group">
-            <label class="col-sm-3 control-label">姓氏：</label>
+            <label class="col-sm-3 control-label">菜单名称：</label>
             <div class="col-sm-8">
-                <input id="firstname" name="firstname" class="form-control" type="text">
+                <input id="menuName" name="menuName" class="form-control" data-minlength="2" type="text" required>
                 <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 这里写点提示的内容</span>
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-3 control-label">名字：</label>
+            <label class="col-sm-3 control-label">菜单编码：</label>
             <div class="col-sm-8">
-                <input id="lastname" name="lastname" class="form-control" type="text" aria-required="true" aria-invalid="false" class="valid">
+                <input id="menuCode" name="menuCode" class="form-control" type="text" aria-required="true" aria-invalid="false" class="valid" required>
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-3 control-label">用户名：</label>
+            <label class="col-sm-3 control-label">菜单类型：</label>
             <div class="col-sm-8">
-                <input id="username" name="username" class="form-control" type="text" aria-required="true" aria-invalid="true" class="error">
+                <input id="menuType" name="menuType" class="form-control" type="text" aria-required="true" aria-invalid="true" class="error">
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-3 control-label">密码：</label>
+            <label class="col-sm-3 control-label">菜单url：</label>
             <div class="col-sm-8">
-                <input id="password" name="password" class="form-control" type="password">
+                <input id="url" name="url" class="form-control" type="text">
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-3 control-label">确认密码：</label>
+            <label class="col-sm-3 control-label">菜单样例：</label>
             <div class="col-sm-8">
-                <input id="confirm_password" name="confirm_password" class="form-control" type="password">
+                <input id="icon" name="icon" class="form-control" type="text">
                 <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 请再次输入您的密码</span>
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-3 control-label">E-mail：</label>
+            <label class="col-sm-3 control-label">上级菜单：</label>
             <div class="col-sm-8">
-                <input id="email" name="email" class="form-control" type="email">
+                <input id="pcode" name="pcode" class="form-control" type="email">
             </div>
         </div>
         <div class="form-group">
@@ -78,13 +78,12 @@ Li Dehuan
     
     <!-- js -->
 	<script src="${contextPath}/static/Hplus/js/jquery.min.js?v=2.1.4"></script>
+	<script src="${contextPath}/static/Hplus/js/jquery.form.js?v=2.1.4"></script>
 	<script src="${contextPath }/static/Hplus/js/plugins/layer/layer.min.js"></script>
 	<script src="${contextPath }/static/Hplus/js/plugins/validate/jquery.validate.min.js"></script>
 	<script src="${contextPath }/static/Hplus/js/plugins/validate/messages_zh.min.js"></script>
-	<script src="${contextPath }/static/Hplus/js/demo/form-validate-demo.js"></script>
 	
-	<script type="text/javascript">
-	
-	</script>
+	<!-- menujs 一般放在最后-->
+	<script src="${contextPath }/static/js/web/sys/menu/menuForm.js"></script>
 </body>
 </html>

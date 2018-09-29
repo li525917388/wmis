@@ -46,4 +46,5 @@ public class MenuAction extends BaseAction<Menu>{
 		System.out.println("菜单编辑页面。" + id);
 		return "sys/menu/menuForm";
 	}
+
 }

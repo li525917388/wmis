@@ -89,14 +89,16 @@ public abstract class BaseAction<T> extends SuperAction{
 	/**
 	 * 插入action方法
 	 * @param t
+	 * @throws IOException 
 	 */
 	@RequestMapping(method=RequestMethod.POST)
 	@ResponseBody
-	public void add(T t){
+	public void add(T t) throws IOException{
 		System.out.println("新增");
 		
 		getService().insert(t);
 
+		getResponse().getWriter().print("true");
 	}
 	
 	

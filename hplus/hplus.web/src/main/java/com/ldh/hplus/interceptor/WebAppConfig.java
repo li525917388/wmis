@@ -4,6 +4,7 @@ import java.nio.charset.Charset;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -17,12 +18,26 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
 	
 	@Autowired
 	InterceptorConfig interceptorConfig;
+	
+	@Value("${ldh.exclude.path.patterns}")
+	private String noCheckList;
 
 	@Override  
     public void addInterceptors(InterceptorRegistry registry) { 
 		 System.out.println("addInterceptors----------------------");
+		 System.out.println("excludePathPatterns----------------------");
+		 System.out.println(noCheckList);
+		 System.out.println("----------------------");
+		 
+		 if(noCheckList == null){
+			 
+			 noCheckList = "/sys/user/login";
+		 }
+		 
+		 String[] noChecks = noCheckList.split(",");
+		 
         //注册自定义拦截器，添加拦截路径和排除拦截路径  
-        registry.addInterceptor(interceptorConfig).addPathPatterns("/**").excludePathPatterns("/sys/user/login");  
+        registry.addInterceptor(interceptorConfig).addPathPatterns("/**").excludePathPatterns(noChecks);  
     }
 	 
 	@Bean

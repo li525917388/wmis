@@ -18,3 +18,10 @@
 <link href="${contextPath}/static/Hplus/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
 <link href="${contextPath}/static/Hplus/css/animate.css" rel="stylesheet">
 <link href="${contextPath}/static/Hplus/css/style.css?v=4.1.0" rel="stylesheet">
+
+<style>
+/* 布局中心区的iframe样式 */
+#ldh_content_iframe{
+	border: none !important;
+}
+</style>
