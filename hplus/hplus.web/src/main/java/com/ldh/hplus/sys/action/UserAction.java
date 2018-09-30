@@ -1,8 +1,10 @@
 package com.ldh.hplus.sys.action;
 
 import java.io.IOException;
+import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -63,15 +65,26 @@ public class UserAction extends BaseAction<User> {
 			return;
 		}
 		
-		String sessionId = "user_session_" + u.getAccount();
+		//登录token
+		String sessionId = BaseConstants.SESSION_USER  + "_" + UUID.randomUUID().toString();
 		
-		getRequest().getSession().setAttribute(BaseConstants.SESSION_USER, u);
+		getRequest().getSession().setAttribute(BaseConstants.SESSION_USER, u);	//在session中保存user信息
+		
+		String domain = getRequest().getServerName();
+		System.out.println(domain + "---domain");
+		Cookie uasLoginer = new Cookie(BaseConstants.SESSION_USER, sessionId);
 
+		uasLoginer.setDomain(domain); 
+		uasLoginer.setMaxAge(60000);  
+		uasLoginer.setPath("/"); 
+		getResponse().addCookie(uasLoginer); 
+		
 		UserSession us = new UserSession(u);
 		
 		String user_json = new Gson().toJson(us);
 		
 		redisService.set(sessionId,user_json);
+		redisService.expireSeconds(sessionId, 600);	//设置时效
 		
 		resSuccess();
 	}

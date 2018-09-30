@@ -16,7 +16,13 @@ Li Dehuan
 	<link rel="shortcut icon" href="favicon.ico">
 	<link rel="stylesheet" href="${contextPath}/static/Hplus/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
 	<link rel="stylesheet" href="${contextPath}/static/Hplus/css/font-awesome.min.css?v=4.4.0">
+	<link rel="stylesheet" href="${contextPath}/static/Hplus/css/style.css?v=4.1.0" >
 
+	<style type="text/css">
+		.ldh_childmenu_group{
+			display: none;
+		}
+	</style>
 </head>
 <body style="padding-top: 10px;">
 	<form class="form-horizontal m-t" id="signupForm">
@@ -24,7 +30,6 @@ Li Dehuan
             <label class="col-sm-3 control-label">菜单名称：</label>
             <div class="col-sm-8">
                 <input id="menuName" name="menuName" class="form-control" data-minlength="2" type="text" required>
-                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 这里写点提示的内容</span>
             </div>
         </div>
         <div class="form-group">
@@ -36,41 +41,54 @@ Li Dehuan
         <div class="form-group">
             <label class="col-sm-3 control-label">菜单类型：</label>
             <div class="col-sm-8">
-                <input id="menuType" name="menuType" class="form-control" type="text" aria-required="true" aria-invalid="true" class="error">
+            	<select id="menuType" name="menuType" class="form-control" aria-required="true" aria-invalid="true" class="error" required>
+            		<option value="1">目录</option>
+            		<option value="2">菜单</option>
+            	</select> 
             </div>
         </div>
-        <div class="form-group">
+        
+        <div class="form-group ldh_parentmenu_group">
+            <label class="col-sm-3 control-label">菜单样例：</label>
+            <div class="col-sm-8">
+                <input id="icon" name="icon" class="form-control" type="text">
+                <span class="m-b-none" onclick="lookIconClick()" style="cursor: pointer;"><i class="fa fa-info-circle"></i> 点击查看样例</span>
+            </div>
+        </div>
+        
+        <div class="form-group ldh_childmenu_group">
             <label class="col-sm-3 control-label">菜单url：</label>
             <div class="col-sm-8">
                 <input id="url" name="url" class="form-control" type="text">
             </div>
         </div>
-        <div class="form-group">
-            <label class="col-sm-3 control-label">菜单样例：</label>
-            <div class="col-sm-8">
-                <input id="icon" name="icon" class="form-control" type="text">
-                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 请再次输入您的密码</span>
-            </div>
-        </div>
-        <div class="form-group">
+        
+        <div class="form-group ldh_childmenu_group">
             <label class="col-sm-3 control-label">上级菜单：</label>
             <div class="col-sm-8">
                 <input id="pcode" name="pcode" class="form-control" type="email">
             </div>
         </div>
+        
+        <!-- 菜单顺序 -->
         <div class="form-group">
-            <div class="col-sm-8 col-sm-offset-3">
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" class="checkbox" id="agree" name="agree">
-                        我已经认真阅读并同意《H+使用协议》
-                    </label>
-                </div>
+            <label class="col-sm-3 control-label">菜单顺序：</label>
+            <div class="col-sm-8">
+                <input id="menuOrder" name="menuOrder" class="form-control" type="text" value="1" required>
             </div>
         </div>
+        
+        <!-- 菜单描述 -->
+        <div class="form-group">
+            <label class="col-sm-3 control-label">菜单描述：</label>
+            <div class="col-sm-8">
+                <input id="describe" name="describe" class="form-control" type="text">
+            </div>
+        </div>
+       
         <div class="form-group">
             <div class="col-sm-8 col-sm-offset-3">
-                <button class="btn btn-primary" type="submit">提交</button>
+                <button class="btn btn-primary" type="submit">添加</button>
             </div>
         </div>
     </form>
@@ -78,11 +96,13 @@ Li Dehuan
     
     <!-- js -->
 	<script src="${contextPath}/static/Hplus/js/jquery.min.js?v=2.1.4"></script>
-	<script src="${contextPath}/static/Hplus/js/jquery.form.js?v=2.1.4"></script>
+	<script src="${contextPath}/static/js/jquery.form.js"></script>
 	<script src="${contextPath }/static/Hplus/js/plugins/layer/layer.min.js"></script>
 	<script src="${contextPath }/static/Hplus/js/plugins/validate/jquery.validate.min.js"></script>
 	<script src="${contextPath }/static/Hplus/js/plugins/validate/messages_zh.min.js"></script>
 	
+	<!-- 公共js -->
+	<script src="${contextPath}/static/js/common.js?v=2.1.4"></script>
 	<!-- menujs 一般放在最后-->
 	<script src="${contextPath }/static/js/web/sys/menu/menuForm.js"></script>
 </body>

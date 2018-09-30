@@ -17,87 +17,103 @@ $.validator.setDefaults({
     errorClass: "help-block m-b-none",
     validClass: "help-block m-b-none",
     submitHandler: function(form) {
-    	//编写验证通过提交事件
-        alert("提交事件!");
-        debugger;
-        alert(form.menuType.value);
-        var aa = $(form);
-        alert(aa.find("#menuType").val());
+
+        var formData = new FormData(form);	//获取表单数据，并封装成FormData对象
         
-        $(form).ajax({
+        $.ajax({
         	url: "/hplus/sys/menu",
-        	data: {menuName:"123"},
+        	data: formData,
         	type: "POST",
+        	processData:false,
+            contentType:false,
         	//dataType: "json",
         	success: function(res){
-        		
+        		alert(res);
+        		if(res == true){
+        			debugger;
+        			var index= parent.layer.getFrameIndex(Window.name);
+        			parent.layer.close(index);
+        		}
         	}
         });
     }
 
 });
 
+//邮政编码验证   
+jQuery.validator.addMethod("english", function(value, element) {   
+    var tel = /^[a-zA-Z]*$/;
+    return this.optional(element) || (tel.test(value));
+}, "只允许填写大小写英文字母");
+
+//查看图标点击事件
+function lookIconClick(){
+	
+	parent.layer.open({
+		type: 2,
+		title: true,
+		closeBtn: 1, //不显示关闭按钮
+		shadeClose: true,
+		shade: 0.2,
+		area: ['1200px', '700px'],
+		content: ["http://fontawesome.dashgame.com/"]
+	});
+}
 
 $().ready(function () {
 
     var icon = "<i class='fa fa-times-circle'></i> ";
     $("#signupForm").validate({
         rules: {
-           /* menuName: "required",
-            menuCode: "required",*/
-            menuType: {
-                required: true,
-                minlength: 2
+           /* menuName: "required",*/
+            menuCode: {
+            	english: true,
+            	maxlength: 25
             },
             url: {
-                required: true,
-                minlength: 5
+            	maxlength: 60
             },
-            confirm_password: {
-                required: true,
-                minlength: 5,
-                equalTo: "#password"
+            icon: {
+            	maxlength: 60
             },
-            email: {
-                required: true,
-                email: true
+            menuOrder: {
+                digits: true
             },
-            topic: {
-                required: "#newsletter:checked",
-                minlength: 2
-            },
-            agree: "required"
+            describe: {
+                maxlength: 100
+            }
         },
         messages: {
-           /* firstname: icon + "请输入你的姓",
-            lastname: icon + "请输入您的名字",*/
-            username: {
-                required: icon + "请输入您的用户名",
-                minlength: icon + "用户名必须两个字符以上"
+           /* firstname: icon + "请输入你的姓",*/
+            menuCode: {
+                maxlength: icon + "不能超过25个字符"
             },
-            password: {
-                required: icon + "请输入您的密码",
-                minlength: icon + "密码必须5个字符以上"
+            url: {
+                 maxlength: icon + "不能超过60个字符"
             },
-            confirm_password: {
-                required: icon + "请再次输入密码",
-                minlength: icon + "密码必须5个字符以上",
-                equalTo: icon + "两次输入的密码不一致"
+            icon: {
+                 maxlength: icon + "不能超过60个字符"
             },
-            email: icon + "请输入您的E-mail",
-            agree: {
-                required: icon + "必须同意协议后才能注册",
-                element: '#agree-error'
+            menuOrder: {
+                digits: icon + "只能输入数字"
+            },
+            describe: {
+            	maxlength: icon + "不能超过100个字符"
             }
         }
     });
 
     // propose username by combining first- and lastname
-    $("#username").focus(function () {
-        var firstname = $("#firstname").val();
-        var lastname = $("#lastname").val();
-        if (firstname && lastname && !this.value) {
-            this.value = firstname + "." + lastname;
+    $("#menuType").change(function () {
+        
+    	if($(this).val() == 1){
+    		$(".ldh_parentmenu_group").show();
+    		$(".ldh_childmenu_group").hide();
+        }else{
+        	$(".ldh_parentmenu_group").hide();
+        	$(".ldh_childmenu_group").show();
         }
     });
+ 
+    
 });

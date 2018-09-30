@@ -1,6 +1,7 @@
 package com.ldh.hplus.common.service;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -44,6 +45,18 @@ public class RedisServiceImpl implements RedisService{
 	public List<String> getList(String key) {
 		// TODO Auto-generated method stub
 		return stringRedisTemplate.opsForList().range(key, 0, Integer.MAX_VALUE);
+	}
+
+	@Override
+	public void put(String key, String hashKey, String value) {
+		// TODO Auto-generated method stub
+		stringRedisTemplate.opsForHash().put(key, hashKey, value);
+	}
+
+	@Override
+	public void expireSeconds(String key, long timeout) {
+		// TODO Auto-generated method stub
+		stringRedisTemplate.expire(key, timeout, TimeUnit.SECONDS);
 	}
 
 }

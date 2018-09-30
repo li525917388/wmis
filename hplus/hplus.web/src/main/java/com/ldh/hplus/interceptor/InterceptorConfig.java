@@ -2,6 +2,7 @@ package com.ldh.hplus.interceptor;
 
 import java.util.Date;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -58,12 +59,29 @@ public class InterceptorConfig implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
 			Object arg2) throws Exception {
-		System.out.println("preHandle" + name);
+		System.out.println("验证登录状态----");
 		
 		//获取sessionId
 		String session = request.getParameter("sessionId");
+
+		if(session == null){
+			//从cookie中取值
+			Cookie[] cookies = request.getCookies();
+			
+			if(cookies != null){
+				for(int i = 0; i < cookies.length; i++){
+					
+					if(BaseConstants.SESSION_USER.equals(cookies[i].getName())){
+						
+						session = cookies[i].getValue();
+						break;
+					}
+					
+				}
+			}
+			
+		}
 		
-		System.out.println(session);
 		
 		//从session里查找当前会话用户
 		User user = (User) request.getSession().getAttribute(BaseConstants.SESSION_USER);
@@ -72,25 +90,19 @@ public class InterceptorConfig implements HandlerInterceptor {
 		if(user == null){
 			
 			if(session == null){
-				
+	
 				response.sendRedirect(request.getContextPath()+"/login.jsp");
 				
 				return false;
 			}
-			
-			//打开Redis
-			//Jedis jedis = new Jedis(redis_host,redis_port);
-			
-			//获取user_session
-			String user_session = stringRedisTemplate.opsForValue().get(session);
-			
 
-			//jedis.close();//关闭连接
-			
+			//从redis中获取user_session
+			String user_session = stringRedisTemplate.opsForValue().get(session);
+
 			if(user_session == null){
 				
 				response.sendRedirect(request.getContextPath()+"/login.jsp");	
-
+				return false;
 			}else{
 				
 				UserSession jedis_userSession = new Gson().fromJson(user_session, UserSession.class);

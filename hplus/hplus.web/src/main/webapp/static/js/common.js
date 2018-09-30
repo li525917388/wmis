@@ -1,4 +1,4 @@
-$.jgrid.defaults.styleUI = "Bootstrap";
+
 
 // 页面弹出层
 function openWindow(url,title){

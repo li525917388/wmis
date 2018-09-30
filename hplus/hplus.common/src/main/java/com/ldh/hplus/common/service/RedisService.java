@@ -41,4 +41,22 @@ public interface RedisService {
 	 * @return value
 	 */
 	public List<String> getList(String key);
+	
+	
+	
+	/**
+	 * 新增Hash类型值
+	 * @param key
+	 * @param hashKey
+	 * @param value
+	 */
+	public void put(String key, String hashKey,String value);
+	
+	
+	/**
+	 * 设置有效值时间(单位：秒)
+	 * @param key
+	 * @param timeout
+	 */
+	public void expireSeconds(String key,long timeout);
 }

@@ -48,6 +48,8 @@
 	<script src="${contextPath}/static/js/common.js?v=2.1.4"></script>
 	
 	<script>
+	$.jgrid.defaults.styleUI = "Bootstrap";
+
 	$("#table_list_1").jqGrid({
         url: "${contextPath }/sys/menu",
         datatype: "json",
