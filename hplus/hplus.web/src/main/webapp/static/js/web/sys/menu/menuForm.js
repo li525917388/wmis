@@ -17,7 +17,8 @@ $.validator.setDefaults({
     errorClass: "help-block m-b-none",
     validClass: "help-block m-b-none",
     submitHandler: function(form) {
-
+    	///这里写提交事件内容
+    	
         var formData = new FormData(form);	//获取表单数据，并封装成FormData对象
         
         $.ajax({
@@ -28,11 +29,16 @@ $.validator.setDefaults({
             contentType:false,
         	//dataType: "json",
         	success: function(res){
-        		alert(res);
-        		if(res == true){
-        			debugger;
-        			var index= parent.layer.getFrameIndex(Window.name);
-        			parent.layer.close(index);
+
+        		if(res == 'true'){
+        			window.parent.reloadGrid();//刷新表格数据
+        			
+        			var mylay = parent.layer.getFrameIndex(window.name);
+ 
+        			parent.layer.close(mylay);
+        		}else{
+        			
+        			layer.msg("操作失败！！！");
         		}
         	}
         });

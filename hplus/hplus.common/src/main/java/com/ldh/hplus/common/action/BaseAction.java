@@ -96,7 +96,7 @@ public abstract class BaseAction<T> extends SuperAction{
 	public void add(T t) throws IOException{
 		System.out.println("新增");
 		
-//		getService().insert(t);
+		getService().insert(t);
 
 		getResponse().getWriter().print("true");
 	}

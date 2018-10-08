@@ -29,13 +29,13 @@ Li Dehuan
         <div class="form-group">
             <label class="col-sm-3 control-label">菜单名称：</label>
             <div class="col-sm-8">
-                <input id="menuName" name="menuName" class="form-control" data-minlength="2" type="text" required>
+                <input id="menuName" name="menuName" class="form-control" data-minlength="2" type="text" value="${menuEntity.menuName }" required>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label">菜单编码：</label>
             <div class="col-sm-8">
-                <input id="menuCode" name="menuCode" class="form-control" type="text" aria-required="true" aria-invalid="false" class="valid" required>
+                <input id="menuCode" name="menuCode" class="form-control" type="text" value="${menuEntity.menuCode }" aria-required="true" aria-invalid="false" class="valid" required>
             </div>
         </div>
         <div class="form-group">
@@ -51,7 +51,7 @@ Li Dehuan
         <div class="form-group ldh_parentmenu_group">
             <label class="col-sm-3 control-label">菜单样例：</label>
             <div class="col-sm-8">
-                <input id="icon" name="icon" class="form-control" type="text">
+                <input id="icon" name="icon" class="form-control" type="text" value="${menuEntity.icon }">
                 <span class="m-b-none" onclick="lookIconClick()" style="cursor: pointer;"><i class="fa fa-info-circle"></i> 点击查看样例</span>
             </div>
         </div>
@@ -59,14 +59,22 @@ Li Dehuan
         <div class="form-group ldh_childmenu_group">
             <label class="col-sm-3 control-label">菜单url：</label>
             <div class="col-sm-8">
-                <input id="url" name="url" class="form-control" type="text">
+                <input id="url" name="url" class="form-control" type="text" value="${menuEntity.url }">
             </div>
         </div>
         
         <div class="form-group ldh_childmenu_group">
             <label class="col-sm-3 control-label">上级菜单：</label>
             <div class="col-sm-8">
-                <input id="pcode" name="pcode" class="form-control" type="email">
+                <input id="pcode" name="pcode" class="form-control" type="text" value="${menuEntity.pcode }">
+            </div>
+        </div>
+        
+		<!-- 打开方式 -->
+		<div class="form-group ldh_childmenu_group">
+		<label class="col-sm-3 control-label">打开方式：</label>
+			<div class="col-sm-8">
+                <input id="openType" name="openType" class="form-control" type="text" value="${menuEntity.openType }">
             </div>
         </div>
         
@@ -74,7 +82,7 @@ Li Dehuan
         <div class="form-group">
             <label class="col-sm-3 control-label">菜单顺序：</label>
             <div class="col-sm-8">
-                <input id="menuOrder" name="menuOrder" class="form-control" type="text" value="1" required>
+                <input id="menuOrder" name="menuOrder" class="form-control" type="text" value="${menuEntity.menuOrder }" required>
             </div>
         </div>
         
@@ -82,7 +90,7 @@ Li Dehuan
         <div class="form-group">
             <label class="col-sm-3 control-label">菜单描述：</label>
             <div class="col-sm-8">
-                <input id="describe" name="describe" class="form-control" type="text">
+                <input id="describe" name="describe" class="form-control" type="text" value="${menuEntity.describe }">
             </div>
         </div>
        

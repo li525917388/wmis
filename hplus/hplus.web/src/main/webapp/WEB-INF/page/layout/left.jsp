@@ -35,7 +35,7 @@
             <c:forEach items="${user_role_menus }" var="m">
              <li>
                 <a href="#">
-                    <i class="fa fa-bug"></i>
+                    <i class="fa fa-${m.icon} }"></i>
                     <span class="nav-label">${m.menuName } </span>
                     <span class="fa arrow"></span>
                 </a>

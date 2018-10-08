@@ -21,6 +21,7 @@ import com.ldh.hplus.common.util.BaseInsert;
 import com.ldh.hplus.common.util.BaseParameterType;
 import com.ldh.hplus.common.util.BaseUpdate;
 import com.ldh.hplus.common.util.Filter;
+import com.ldh.hplus.common.util.LDH_Temp;
 
 @Service("BaseService")
 public class BaseServiceImpl<T> implements BaseService<T> {
@@ -94,6 +95,11 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 		//bpt.setTable(getTableName());
 		
 		Map<String, Object> res = dao.getBean(bpt);
+		
+		if(res == null){
+			
+			return null;
+		}
 		
 		Set<Entry<String, Object>> entrys = res.entrySet();
 		
@@ -328,6 +334,12 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 		Field[] fields = clazz.getDeclaredFields();		//获得所有属性
 		
 		for(int i = 0; i < fields.length; i++){
+
+			//判断是否临时注解
+			boolean  isTemp = isTemp(fields[i]);
+			if(isTemp){
+				continue;
+			}
 			
 			fields[i].setAccessible(true); 			//设置私有属性公有
 			
@@ -370,6 +382,12 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 		Field[] fields = clazz.getDeclaredFields();		//获得所有属性
 		
 		for(int i = 0; i < fields.length; i++){
+			
+			//判断是否临时注解
+			boolean  isTemp = isTemp(fields[i]);
+			if(isTemp){
+				continue;
+			}
 			
 			fields[i].setAccessible(true); 			//设置私有属性公有
 
@@ -462,5 +480,23 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 		bpt.setFielter(filter);
 		
 		return null;
+	}
+	
+	
+	/**
+	 * 判断是否临时注解
+	 * @param f
+	 * @return
+	 */
+	private boolean isTemp(Field f){
+		
+		LDH_Temp t = f.getAnnotation(LDH_Temp.class);
+		
+		if(t == null){
+			
+			return false;
+		}
+		
+		return true;
 	}
 }

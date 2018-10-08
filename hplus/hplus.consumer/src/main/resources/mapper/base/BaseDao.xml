@@ -17,10 +17,10 @@
 		insert into ${table} 
 		(
 		<foreach collection="fieldList" item="field" separator=",">
-			${field}
+			`${field}`
 		</foreach>
 		) 
-		value(
+		values(
 		<foreach collection="valueList" item="value" separator=",">
 			#{value}
 		</foreach>

@@ -44,6 +44,11 @@ public class MenuAction extends BaseAction<Menu>{
 	@RequestMapping(value="/edit/{id}",method=RequestMethod.GET)
 	public String toEditPage(@PathVariable("id")Long id){
 		System.out.println("菜单编辑页面。" + id);
+		
+		Menu menu = menuServcice.getBeanById(id);
+		
+		getRequest().setAttribute("menuEntity", menu);
+		
 		return "sys/menu/menuForm";
 	}
 

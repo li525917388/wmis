@@ -28,13 +28,13 @@
 
 	<div class="btn_panel">
 		<button type="button" onclick="addBase()" class="btn btn-sm btn-primary">新增</button>
-		<button type="button" class="btn btn-sm btn-info">编辑</button>
+		<button type="button" onclick="editBase()" class="btn btn-sm btn-info">编辑</button>
 		<button type="button" class="btn btn-sm btn-danger">删除</button>
 		<button type="button" class="btn btn-sm btn-success">查看</button>
 	</div>
 	
 	<!-- 你的HTML代码 -->
-	<table id="table_list_1"></table>   
+	<table id="menu_grid"></table>   
     <div id="gridpager"></div>
 	
 	
@@ -50,7 +50,7 @@
 	<script>
 	$.jgrid.defaults.styleUI = "Bootstrap";
 
-	$("#table_list_1").jqGrid({
+	$("#menu_grid").jqGrid({
         url: "${contextPath }/sys/menu",
         datatype: "json",
         height: 250,
@@ -73,6 +73,7 @@
         pager: "#gridpager",
         viewrecords: true,
         multiselect: true,	//多选
+       	multiboxonly: true, 
         hidegrid: false
     });
 	
@@ -80,6 +81,31 @@
 	function addBase(){
 		
 		openWindow("${contextPath }/sys/menu/edit/0");
+	}
+	
+	//编辑
+	function editBase(){
+		
+		var ids = $("#menu_grid").jqGrid("getGridParam","selarrrow");
+		
+		if(ids.length == 1){
+			
+			openWindow("${contextPath }/sys/menu/edit/" + ids);
+		}else if(ids.length == 0){
+			
+			layer.msg("请选择一条数据");
+		}else{
+			
+			layer.msg("只能选择一条数据");
+		}
+
+	}
+	
+	
+	//刷新数据表格
+	function reloadGrid(){
+
+		jQuery("#menu_grid").trigger("reloadGrid");
 	}
 	</script>
 </body>
