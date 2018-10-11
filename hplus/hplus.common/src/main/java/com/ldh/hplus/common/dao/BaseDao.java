@@ -49,6 +49,13 @@ public interface BaseDao<T> {
 	
 	
 	/**
+	 * 批量删除
+	 * @return
+	 */
+	public int deleteList(BaseParameterType bpt);
+	
+	
+	/**
 	 * 更新
 	 * @param bt
 	 * @return

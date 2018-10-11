@@ -1,3 +1,14 @@
+var oper = $("#oper").val();
+if(oper == "view"){
+
+	$("input").attr("readOnly","readOnly");
+	$("select").attr("disabled","disabled");
+}else{
+	
+	$("input").removeAttr("readOnly");
+	$("select").removeAttr("disabled");
+}
+
 //以下为修改jQuery Validation插件兼容Bootstrap的方法，没有直接写在插件中是为了便于插件升级
 $.validator.setDefaults({
     highlight: function (element) {
@@ -21,21 +32,39 @@ $.validator.setDefaults({
     	
         var formData = new FormData(form);	//获取表单数据，并封装成FormData对象
         
+        var menuid = formData.get("menuid");	//获取主键
+        
+        if(menuid == ""){
+        	
+        	menuid = 0;
+        }
+        
+        //请求
         $.ajax({
-        	url: "/hplus/sys/menu",
+        	url: "/hplus/sys/menu/" + menuid,
         	data: formData,
-        	type: "POST",
+        	type: "post",
+        	async: false,
         	processData:false,
-            contentType:false,
+        	contentType:false,
+           // contentType:false,
         	//dataType: "json",
         	success: function(res){
+        		
+        		alert(res);
 
-        		if(res == 'true'){
+        		if(res > 0){
+        			
         			window.parent.reloadGrid();//刷新表格数据
         			
-        			var mylay = parent.layer.getFrameIndex(window.name);
- 
-        			parent.layer.close(mylay);
+        			layer.msg("操作成功");
+        			
+        			setTimeout(function(){
+        				
+        				var mylay = parent.layer.getFrameIndex(window.name);
+        				parent.layer.close(mylay);
+        			},1200);
+
         		}else{
         			
         			layer.msg("操作失败！！！");
@@ -48,7 +77,7 @@ $.validator.setDefaults({
 
 //邮政编码验证   
 jQuery.validator.addMethod("english", function(value, element) {   
-    var tel = /^[a-zA-Z]*$/;
+    var tel = /^[a-zA-Z_]*$/;
     return this.optional(element) || (tel.test(value));
 }, "只允许填写大小写英文字母");
 
@@ -69,7 +98,7 @@ function lookIconClick(){
 $().ready(function () {
 
     var icon = "<i class='fa fa-times-circle'></i> ";
-    $("#signupForm").validate({
+    var validator = $("#signupForm").validate({
         rules: {
            /* menuName: "required",*/
             menuCode: {
@@ -121,5 +150,10 @@ $().ready(function () {
         }
     });
  
+    //重置
+    $("#resetBtn").click(function(){
+    	
+    	validator.resetForm();
+    });
     
 });

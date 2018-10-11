@@ -59,4 +59,11 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
             ContentNegotiationConfigurer configurer) {
         configurer.favorPathExtension(false);
     }
+	
+	// 就是这个
+    /*@Bean
+    public HttpPutFormContentFilter httpPutFormContentFilter() {
+        return new HttpPutFormContentFilter();
+    }*/
+
 }

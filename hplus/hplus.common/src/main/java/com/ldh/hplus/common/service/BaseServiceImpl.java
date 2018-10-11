@@ -499,4 +499,77 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 		
 		return true;
 	}
+
+	@Override
+	public long save(T t) {
+		
+		Class<? extends Object> clazz = t.getClass();
+		
+		long id = 0;
+		
+		try {
+			
+			Field f = clazz.getDeclaredField("id");
+			
+			f.setAccessible(true);
+			
+			id = f.getLong(t);
+			
+		} catch (NoSuchFieldException e) {
+			
+			//找父类的方法
+			Field pf = getSurperField(clazz,"id");
+			
+			pf.setAccessible(true);
+			
+			try {
+				id = pf.getLong(t);
+			} catch (IllegalArgumentException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IllegalAccessException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if(id == 0){
+			
+			return this.insert(t);
+		}else{
+			
+			return this.update(t);
+		}
+	}
+
+	@Override
+	public int deleteList(String ids) {
+		
+		BaseParameterType bpt = getPara();
+		
+		List<Long> idList = new ArrayList<Long>();
+		
+		String[] idss = ids.split(",");
+		
+		for(String id : idss){
+			
+			idList.add(Long.valueOf(id));
+		}
+		
+		bpt.setIds(idList);
+		
+		int res = dao.deleteList(bpt);
+		
+		return res;
+	}
 }

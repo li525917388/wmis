@@ -29,8 +29,9 @@
 	<div class="btn_panel">
 		<button type="button" onclick="addBase()" class="btn btn-sm btn-primary">新增</button>
 		<button type="button" onclick="editBase()" class="btn btn-sm btn-info">编辑</button>
-		<button type="button" class="btn btn-sm btn-danger">删除</button>
-		<button type="button" class="btn btn-sm btn-success">查看</button>
+		<button type="button" onclick="delBase()" class="btn btn-sm btn-danger">删除</button>
+		<button type="button" onclick="viewBase()" class="btn btn-sm btn-success">查看</button>
+		<button type="button" onclick="reloadGrid()" class="btn btn-sm btn-success">刷新</button>
 	</div>
 	
 	<!-- 你的HTML代码 -->
@@ -101,6 +102,61 @@
 
 	}
 	
+	//查看
+	function viewBase(){
+		
+		var ids = $("#menu_grid").jqGrid("getGridParam","selarrrow");
+		
+		if(ids.length == 1){
+			
+			openWindow("${contextPath }/sys/menu/edit/" + ids + "?oper=view");
+		}else if(ids.length == 0){
+			
+			layer.msg("请选择一条数据");
+		}else{
+			
+			layer.msg("只能选择一条数据");
+		}
+
+	}
+	
+	
+	//删除
+	function delBase(){
+		
+		var selects = $("#menu_grid").jqGrid("getGridParam","selarrrow");
+
+		if(selects.length > 0){
+			
+			var id = "";
+			
+			for(var i in selects){
+				
+				id += selects[i] + "#";
+			}
+			
+			$.ajax({
+				url: "${contextPath }/sys/menu/" + id,
+				type: "DELETE",
+				//data: {ids: ids},
+				success: function(res){
+					
+					if(res > 0){
+						
+						layer.msg("删除成功");
+						reloadGrid();
+					}else{
+						
+						layer.msg("删除失败");
+					}
+					
+				}
+			});
+		}else{
+			
+			layer.msg("请选择一条数据");
+		}
+	}
 	
 	//刷新数据表格
 	function reloadGrid(){

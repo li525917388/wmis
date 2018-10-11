@@ -31,7 +31,7 @@ public class HomeAction extends SuperAction{
 		return "home";
 	}
 
-	@RequestMapping("main")
+	@RequestMapping("/main")
 	public String toMain(){
 		
 		System.out.println("访问main");

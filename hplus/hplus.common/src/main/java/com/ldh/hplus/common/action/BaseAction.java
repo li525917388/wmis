@@ -91,40 +91,54 @@ public abstract class BaseAction<T> extends SuperAction{
 	 * @param t
 	 * @throws IOException 
 	 */
-	@RequestMapping(method=RequestMethod.POST)
+	@RequestMapping(value="/{id}",method=RequestMethod.POST)
 	@ResponseBody
-	public void add(T t) throws IOException{
+	public void add(T t,@PathVariable("id")Long id) throws IOException{
 		System.out.println("新增");
 		
-		getService().insert(t);
+		long res = 0;
+		
+		if(id == 0){
+			res= getService().insert(t);
+		}else{
+			
+			res= getService().update(t);
+		}
 
-		getResponse().getWriter().print("true");
+		getResponse().getWriter().print(res);
 	}
 	
 	
 	/**
 	 * 删除
 	 * @param id
+	 * @throws IOException 
 	 */
 	@RequestMapping(value="/{id}",method=RequestMethod.DELETE)
 	@ResponseBody
-	public void remove(@PathVariable("id")Long id){
+	public void remove(@PathVariable("id")String ids) throws IOException{
 		System.out.println("删除");
-		System.out.println("id:" + id );
-		getService().delete(id);
+		System.out.println("id:" + ids );
+		
+		int res = getService().deleteList(ids);
+		
+		getResponse().getWriter().print(res);
 	}
 	
 	
 	/**
 	 * 更新
 	 * @param t
+	 * @throws IOException 
 	 */
 	@RequestMapping(method=RequestMethod.PUT)
 	@ResponseBody
-	public void update(T t){
+	public void update(T t) throws IOException{
 		System.out.println("更新 ");
 		
-		getService().update(t);
+		long res = getService().update(t);
+		
+		getResponse().getWriter().print(res);
 	}
 	
 	

@@ -25,7 +25,14 @@ Li Dehuan
 	</style>
 </head>
 <body style="padding-top: 10px;">
-	<form class="form-horizontal m-t" id="signupForm">
+	<form class="form-horizontal m-t" id="signupForm" method="post">
+		
+		<!-- 隐藏域 -->
+		<input id="menuid" name="menuid" type="hidden" autocomplete="off" value="${menuEntity.id }">
+		<input type="hidden" id="oper" name="oper" value="${oper}" />
+		
+		<!-- <input type="hidden" name="_method" value="put" /> -->
+		
         <div class="form-group">
             <label class="col-sm-3 control-label">菜单名称：</label>
             <div class="col-sm-8">
@@ -95,9 +102,14 @@ Li Dehuan
         </div>
        
         <div class="form-group">
-            <div class="col-sm-8 col-sm-offset-3">
-                <button class="btn btn-primary" type="submit">添加</button>
+        
+        	<c:if test="${oper != 'view' }">
+        	<div class="col-sm-8 col-sm-offset-3">
+                <button class="btn btn-primary" type="submit">保存</button>
             </div>
+            
+        	</c:if>
+            
         </div>
     </form>
                     

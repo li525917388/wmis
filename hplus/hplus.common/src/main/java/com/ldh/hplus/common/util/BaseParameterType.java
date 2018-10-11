@@ -1,5 +1,7 @@
 package com.ldh.hplus.common.util;
 
+import java.util.List;
+
 
 /**
  * 
@@ -11,6 +13,8 @@ public class BaseParameterType {
 	private String table;				//表名
 	
 	private long id;					//主键
+	
+	private List<Long> ids;
 	
 	private Filter fielter;			//
 	
@@ -56,6 +60,14 @@ public class BaseParameterType {
 
 	public void setEnd(long end) {
 		this.end = end;
+	}
+
+	public List<Long> getIds() {
+		return ids;
+	}
+
+	public void setIds(List<Long> ids) {
+		this.ids = ids;
 	}
 
 	

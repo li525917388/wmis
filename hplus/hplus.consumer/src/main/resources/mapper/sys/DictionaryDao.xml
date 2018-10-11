@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ldh.hplus.sys.dao.DictionaryDao">
+	
+
+	<!-- 根据字典类型查找字典列表 -->
+	<select id="getDicListByType" parameterType="String" resultType="dictionary">
+		select 
+		d.id,
+		d.dic_name as dicName,
+		d.dic_code as dicCode,
+		d.dic_order as dicOrder,
+		d.dic_type as dicType,
+		d.dic_describle as dicDescrible 
+		from dictionary_type dt 
+		left join dictionary d on d.dic_type=dt.id 
+		where dt.dic_type_code=#{type}
+	</select>
+
+	<!-- 根据字典类型查找字典列表 -->
+	<select id="getDicByCode" parameterType="java.util.Map" resultType="dictionary">
+	select 
+	d.id,
+	d.dic_name as dicName,
+	d.dic_code as dicCode,
+	d.dic_order as dicOrder,
+	d.dic_type as dicType,
+	d.dic_describle as dicDescrible 
+	from dictionary_type dt 
+	left join dictionary d on d.dic_type=dt.id 
+	where dt.dic_type_code=#{type}
+	and d.dic_code=#{code}
+	</select>
+</mapper>

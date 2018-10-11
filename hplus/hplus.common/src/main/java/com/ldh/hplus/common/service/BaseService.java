@@ -35,12 +35,28 @@ public interface BaseService<T> {
 	public long insert(T t);
 	
 	
+	/**
+	 * 插入或修改数据，根据id是否有值
+	 * @param t
+	 * @return
+	 */
+	public long save(T t);
+	
+	
 	
 	/**
 	 * 删除
 	 * @return
 	 */
 	public int delete(long id);
+	
+	
+	
+	/**
+	 * 删除
+	 * @return
+	 */
+	public int deleteList(String ids);
 	
 	
 	

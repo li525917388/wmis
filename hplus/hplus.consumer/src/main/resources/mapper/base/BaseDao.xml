@@ -28,16 +28,26 @@
 	</insert>
 
 	<!-- 删除 -->
-	<delete id="delete" parameterType="Long">
+	<delete id="delete" parameterType="com.ldh.hplus.common.util.BaseParameterType">
 		delete from ${table} where id=#{id}
 	</delete>
+	
+	
+	<!-- 批量删除 -->
+	<delete id="deleteList" parameterType="com.ldh.hplus.common.util.BaseParameterType">
+		delete from ${table} where id in 
+		<foreach collection="ids" item="value" separator="," open="(" close=")">
+			#{value}
+		</foreach>
+	</delete>
+	
 	
 	<!-- 更新 -->
 	<update id="update" parameterType="com.ldh.hplus.common.util.BaseUpdate">
 		update ${table} set 
 		<foreach collection="data.entrySet()" item="value" index="key" separator=",">
 			<if test="null != value">
-			${key}=#{value } 
+			`${key}`=#{value } 
 			</if>
 			
 		</foreach> 
