@@ -234,6 +234,96 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 		
 		return list;
 	}
+	
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public BaseGrid<T> queryListAndTotal(int page, int pageSize) {
+		BaseParameterType bpt = getPara();
+		
+		List<T> list = new ArrayList<T>();
+		
+		String className = getBeanType();
+		
+		List<Map<String, Object>> res = dao.getListByFilter(bpt);
+		
+		Class<?> clazz = null;
+		
+		try {
+			clazz = Class.forName(className);
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		for(Map<String, Object> map : res){
+			
+			Set<Entry<String, Object>> entrys = map.entrySet();
+			
+			Object o = null;
+			
+			try {
+				o = clazz.newInstance();
+				
+				for(Entry<String, Object> entry : entrys){
+					String key = entry.getKey();		//字段名
+					Object value = entry.getValue();	//字段值
+					
+					Field f;
+					
+					String name = toProperty(key);
+					
+					try {
+						f = clazz.getDeclaredField(name);	//找属性
+						
+						f.setAccessible(true);
+						
+						f.set(o, value);
+						
+					} catch (NoSuchFieldException e1) {
+						
+						System.err.println("在" + clazz.getName() + "中没有找到属性:" + name);
+						
+						Field pf = this.getSurperField(clazz,name);
+						
+						if(pf == null){
+							
+							
+						}else{
+							
+							pf.set(o, value);
+						}	
+						
+					} catch (SecurityException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+				}
+				
+			}  catch (InstantiationException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IllegalAccessException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} 
+
+			list.add((T) o);
+		}
+		
+		BaseGrid<T> bg = new BaseGrid<T>();
+		
+		long records = dao.getCountByFilter(getPara());
+		
+		bg.setRows(list);
+		bg.setRecords(records);
+		bg.setPage(page);
+		int total = records % pageSize == 0 ? (int) (records/pageSize) : (int) (records/pageSize) + 1;
+		bg.setTotal(total);
+		
+		return bg;
+	}
 
 	
 	

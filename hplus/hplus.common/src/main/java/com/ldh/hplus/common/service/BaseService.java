@@ -28,6 +28,15 @@ public interface BaseService<T> {
 	
 	
 	/**
+	 * 获得分页列表
+	 * @param page
+	 * @param pageSize
+	 * @return
+	 */
+	public BaseGrid<T> queryListAndTotal(int page, int pageSize);
+	
+	
+	/**
 	 * 插入数据
 	 * @param t
 	 * @return

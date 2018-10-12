@@ -41,23 +41,12 @@ public abstract class BaseAction<T> extends SuperAction{
 	public void list() throws IOException{
 		System.out.println("查找实体列表");
 		
-		List<T> list = getService().queryAllList();
-		
-		for(T t : list){
-			
-			System.out.println(t.getClass().getName());
-		}
-		
 		System.out.println("list");
 		
 		Gson gson = new Gson();
 		
-		BaseGrid<T> bg = new BaseGrid<T>();
-		
-		bg.setRows(list);
-		bg.setPage(1);
-		bg.setRecords(200);
-		
+		BaseGrid<T> bg = getService().queryListAndTotal(1,10);
+
 		String json = gson.toJson(bg);
 		
 		System.out.println(json);

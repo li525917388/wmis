@@ -1,4 +1,5 @@
-package com.ldh.hplus.sys.action;
+package com.ldh.hplus.authority.action;
+
 
 import java.util.List;
 
@@ -9,27 +10,33 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.ldh.hplus.authority.pojo.Role;
+import com.ldh.hplus.authority.service.RoleService;
 import com.ldh.hplus.common.action.BaseAction;
 import com.ldh.hplus.common.service.BaseService;
 import com.ldh.hplus.sys.pojo.Dictionary;
-import com.ldh.hplus.sys.pojo.Menu;
 import com.ldh.hplus.sys.service.DictionaryService;
-import com.ldh.hplus.sys.service.MenuService;
 
+/**
+ * 角色controller
+ * @author Li Dehuan
+ * @date 2018年10月12日
+ *
+ */
 @Controller
-@RequestMapping("sys/menu")
-public class MenuAction extends BaseAction<Menu>{
+@RequestMapping("authority/role")
+public class RoleAction extends BaseAction<Role> {
 	
 	@Resource
-	MenuService menuServcice;
+	RoleService roleService;
 	
 	@Resource
 	DictionaryService dictionaryService;
 
 	@Override
-	public BaseService<Menu> getService() {
+	public BaseService<Role> getService() {
 		// TODO Auto-generated method stub
-		return menuServcice;
+		return this.roleService;
 	}
 
 	
@@ -37,10 +44,10 @@ public class MenuAction extends BaseAction<Menu>{
 	 * 列表页面
 	 * @return
 	 */
-	@RequestMapping("list")
+	@RequestMapping("/list")
 	public String toList(){
 		
-		return "sys/menu/menuList";
+		return "authority/role/roleList";
 	}
 	
 	
@@ -50,17 +57,16 @@ public class MenuAction extends BaseAction<Menu>{
 	 */
 	@RequestMapping(value="/edit/{id}",method=RequestMethod.GET)
 	public String toEditPage(@PathVariable("id")Long id,String oper){
-		System.out.println("菜单编辑页面。" + id);
+		System.out.println("角色编辑页面。" + id);
 		
-		Menu menu = menuServcice.getBeanById(id);		//获取菜单
+		Role role = roleService.getBeanById(id);		//获取菜单
 		
-		List<Dictionary> typeList = dictionaryService.getDicListByType("menuType");
+		List<Dictionary> typeList = dictionaryService.getDicListByType("roleType");
 		
-		getRequest().setAttribute("menuEntity", menu);
+		getRequest().setAttribute("roleEntity", role);
 		getRequest().setAttribute("oper", oper);
-		getRequest().setAttribute("menuTypeList", typeList);
+		getRequest().setAttribute("roleTypeList", typeList);
 		
-		return "sys/menu/menuForm";
+		return "authority/role/roleForm";
 	}
-
 }

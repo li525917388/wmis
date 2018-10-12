@@ -18,7 +18,7 @@ public class Menu extends BaseBean{
 	
 	private String url;				//菜单地址
 	
-	private int menuType;			//菜单类型
+	private String menuType;			//菜单类型
 	
 	private String icon;			//菜单样式
 	
@@ -57,11 +57,11 @@ public class Menu extends BaseBean{
 		this.url = url;
 	}
 
-	public int getMenuType() {
+	public String getMenuType() {
 		return menuType;
 	}
 
-	public void setMenuType(int menuType) {
+	public void setMenuType(String menuType) {
 		this.menuType = menuType;
 	}
 

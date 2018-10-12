@@ -12,7 +12,7 @@
 		d.dic_code as dicCode,
 		d.dic_order as dicOrder,
 		d.dic_type as dicType,
-		d.dic_describle as dicDescrible 
+		d.dic_describe as dicDescribe 
 		from dictionary_type dt 
 		left join dictionary d on d.dic_type=dt.id 
 		where dt.dic_type_code=#{type}

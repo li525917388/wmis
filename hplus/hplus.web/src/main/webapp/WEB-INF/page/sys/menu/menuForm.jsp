@@ -49,8 +49,18 @@ Li Dehuan
             <label class="col-sm-3 control-label">菜单类型：</label>
             <div class="col-sm-8">
             	<select id="menuType" name="menuType" class="form-control" aria-required="true" aria-invalid="true" class="error" required>
-            		<option value="1">目录</option>
-            		<option value="2">菜单</option>
+            		<c:forEach items="${menuTypeList }" var="mtl">
+            			<c:choose>
+            				<c:when test="${mtl.dicCode == menuEntity.menuType }">
+            				<option value="${mtl.dicCode }" selected="selected">${mtl.dicName }</option>
+            				</c:when>
+            				
+            				<c:otherwise>
+            				<option value="${mtl.dicCode }">${mtl.dicName }</option>
+            				</c:otherwise>
+            			</c:choose>
+            			
+            		</c:forEach>
             	</select> 
             </div>
         </div>

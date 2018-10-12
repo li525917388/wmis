@@ -12,6 +12,7 @@
 		select * from ${table}
 	</select>
 	
+	
 	<!-- 插入 -->
 	<insert id="insert" parameterType="com.ldh.hplus.common.util.BaseInsert">
 		insert into ${table} 
@@ -60,6 +61,6 @@
 	</select>
 	
 	<select id="getCountByFilter" resultType="Long" parameterType="com.ldh.hplus.common.util.BaseParameterType">
-		select * from ${table}
+		select count(*) from ${table}
 	</select>
 </mapper>

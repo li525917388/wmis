@@ -32,16 +32,16 @@ $.validator.setDefaults({
     	
         var formData = new FormData(form);	//获取表单数据，并封装成FormData对象
         
-        var menuid = formData.get("menuid");	//获取主键
+        var roleid = formData.get("roleid");	//获取主键
         
-        if(menuid == ""){
+        if(roleid == ""){
         	
-        	menuid = 0;
+        	roleid = 0;
         }
         
         //请求
         $.ajax({
-        	url: "/hplus/sys/menu/" + menuid,
+        	url: "/hplus/authority/role/" + roleid,
         	data: formData,
         	type: "post",
         	async: false,
@@ -97,19 +97,10 @@ $().ready(function () {
     var icon = "<i class='fa fa-times-circle'></i> ";
     var validator = $("#signupForm").validate({
         rules: {
-           /* menuName: "required",*/
-            menuCode: {
+           /* roleName: "required",*/
+            roleCode: {
             	english: true,
             	maxlength: 25
-            },
-            url: {
-            	maxlength: 60
-            },
-            icon: {
-            	maxlength: 60
-            },
-            menuOrder: {
-                digits: true
             },
             describe: {
                 maxlength: 100
@@ -117,17 +108,8 @@ $().ready(function () {
         },
         messages: {
            /* firstname: icon + "请输入你的姓",*/
-            menuCode: {
+            roleCode: {
                 maxlength: icon + "不能超过25个字符"
-            },
-            url: {
-                 maxlength: icon + "不能超过60个字符"
-            },
-            icon: {
-                 maxlength: icon + "不能超过60个字符"
-            },
-            menuOrder: {
-                digits: icon + "只能输入数字"
             },
             describe: {
             	maxlength: icon + "不能超过100个字符"
@@ -136,16 +118,7 @@ $().ready(function () {
     });
 
     // propose username by combining first- and lastname
-    $("#menuType").change(function () {
-        
-    	if($(this).val() == 1){
-    		$(".ldh_parentmenu_group").show();
-    		$(".ldh_childmenu_group").hide();
-        }else{
-        	$(".ldh_parentmenu_group").hide();
-        	$(".ldh_childmenu_group").show();
-        }
-    });
+   
  
     //重置
     $("#resetBtn").click(function(){
@@ -155,5 +128,5 @@ $().ready(function () {
     
     
     ///加载玩之后执行的事件
-    $("#menuType").change();		//改变菜单类型的事件
+    
 });
