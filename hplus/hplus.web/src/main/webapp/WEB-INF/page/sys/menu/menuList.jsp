@@ -54,22 +54,31 @@
 	$("#menu_grid").jqGrid({
         url: "${contextPath }/sys/menu",
         datatype: "json",
-        height: 250,
+        height: '100%',
         autowidth: true,
         shrinkToFit: true,
         rowNum: 14,
         rowList: [10, 20, 30],
-        colNames: ["id", "菜单编码", "菜单名称", "菜单类型", "url", "样例","上级菜单","顺序","描述"],
+        colNames: ["id", "菜单编码", "菜单名称", "菜单类型", "url", "样例","上级菜单","顺序","描述",""],
         colModel: [
         	{name: "id", index: "id", width: 60, sorttype: "int"},
         	{name: "menuCode",index: "menuCode",width: 90 },
         	{name: "menuName", index: "menuName", width: 100 }, 
         	{name: "menuType", index: "menuType", width: 80  }, 
-        	{name: "url", index: "url", width: 80 }, 
+        	{name: "url", index: "url", width: 120 }, 
         	{name: "icon",index: "icon",width: 80}, 
         	{name: "pcode",index: "pcode",width: 80}, 
-        	{name: "menuOrder",index: "menuOrder",width: 80}, 
-        	{name: "describe",index: "describe",width: 80}
+        	{name: "menuOrder",index: "menuOrder",width: 50}, 
+        	{name: "describe",index: "describe",width: 80},
+        	{name: "menuCode",index: "menuCode",width: 120,formatter:function(val,op,cell){
+        		
+        		if(cell.menuType == 1){
+        			
+        			return "";
+        		}
+        		
+        		return '<button type="button" onclick="openBtnPanel()" class="btn btn-xs btn-primary">按钮管理</button>';
+        	}}
         ],
         pager: "#gridpager",
         viewrecords: true,
@@ -156,6 +165,23 @@
 			
 			layer.msg("请选择一条数据");
 		}
+	}
+	
+	
+	//打开按钮管理页面
+	function openBtnPanel(menuCode,title){
+		
+		var url = "";
+		
+		layer.open({
+			type: 2,
+			title: title,
+			closeBtn: 1, //不显示关闭按钮
+			shadeClose: true,
+			shade: 0.6,
+			area: ['800px', '600px'],
+			content: [url, 'no']
+		});
 	}
 	
 	//刷新数据表格
