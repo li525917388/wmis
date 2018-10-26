@@ -46,12 +46,8 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 	 * @return
 	 */
 	public String getTableName(){
-		
-		String name = getBeanType();
-		
-		String[] ar = name.split("\\.");
-		
-		String oldName = ar.length == 0 ? null : ar[ar.length - 1];
+
+		String oldName = this.getBeanName();
 		
 		StringBuffer sb = new StringBuffer((oldName.charAt(0) + "").toLowerCase());
 		
@@ -661,5 +657,15 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 		int res = dao.deleteList(bpt);
 		
 		return res;
+	}
+
+	@Override
+	public String getBeanName() {
+		
+		String name = getBeanType();
+		
+		String[] ar = name.split("\\.");
+
+		return ar.length == 0 ? null : ar[ar.length - 1];
 	}
 }

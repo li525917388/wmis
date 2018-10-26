@@ -84,4 +84,12 @@ public interface BaseService<T> {
 	 * @return
 	 */
 	public BaseGrid<T> getGridList(Filter filter,int page,int pageSize);
+	
+	
+	
+	/**
+	 * 获得bean名称
+	 * @return
+	 */
+	public String getBeanName();
 }

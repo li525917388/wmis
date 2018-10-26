@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.ldh.hplus.common.annotation.LDHPermission;
 import com.ldh.hplus.common.service.BaseService;
 import com.ldh.hplus.common.util.BaseGrid;
 
@@ -81,6 +82,7 @@ public abstract class BaseAction<T> extends SuperAction{
 	 */
 	@RequestMapping(value="/{id}",method=RequestMethod.POST)
 	@ResponseBody
+	@LDHPermission("add")
 	public void add(T t,@PathVariable("id")Long id) throws IOException{
 		System.out.println("新增");
 		
@@ -119,8 +121,9 @@ public abstract class BaseAction<T> extends SuperAction{
 	 * @param t
 	 * @throws IOException 
 	 */
-	@RequestMapping(method=RequestMethod.PUT)
+	@RequestMapping(value="/update",method=RequestMethod.POST)
 	@ResponseBody
+	@LDHPermission("update")
 	public void update(T t) throws IOException{
 		System.out.println("更新 ");
 		

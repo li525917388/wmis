@@ -63,4 +63,17 @@
 	<select id="getCountByFilter" resultType="Long" parameterType="com.ldh.hplus.common.util.BaseParameterType">
 		select count(*) from ${table}
 	</select>
+	
+	
+	<!-- 验证用户是否有权限 -->
+	<select id="isUserMenuAuthority" parameterType="com.ldh.hplus.common.util.AuthorityParam;" resultType="Integer">
+	select 
+	count(*) 
+	from user_role ur 
+	left join 
+	role_menu t on t.rid=ur.id
+	where 
+	ur.uid=#{uid} 
+	and t.mid=#{authorityId}
+	</select>
 </mapper>

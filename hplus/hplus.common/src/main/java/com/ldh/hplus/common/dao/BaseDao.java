@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.ldh.hplus.common.util.AuthorityParam;
 import com.ldh.hplus.common.util.BaseInsert;
 import com.ldh.hplus.common.util.BaseParameterType;
 import com.ldh.hplus.common.util.BaseUpdate;
@@ -76,4 +77,12 @@ public interface BaseDao<T> {
 	 * @return
 	 */
 	public long getCountByFilter(BaseParameterType parameterType);
+	
+	
+	
+	/**
+	 * 验证用户是否有权限
+	 * @return
+	 */
+	public int isUserAuthority(AuthorityParam param);
 }
