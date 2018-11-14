@@ -12,13 +12,13 @@ public class Button extends BaseBean {
 
 	private String btnName;			//按钮名称
 	
+	private String btnCode;			//所属菜单编码
+	
 	private String btnClass;		//按钮样式
 	
 	private String btnEvent;		//按钮事件
 	
 	private int btnOrder;			//按钮顺序
-	
-	private String menuCode;		//所属菜单编码
 	
 	private String btnDescribe;		//按钮描述
 
@@ -62,12 +62,12 @@ public class Button extends BaseBean {
 		this.btnDescribe = btnDescribe;
 	}
 
-	public String getMenuCode() {
-		return menuCode;
+	public String getBtnCode() {
+		return btnCode;
 	}
 
-	public void setMenuCode(String menuCode) {
-		this.menuCode = menuCode;
+	public void setBtnCode(String btnCode) {
+		this.btnCode = btnCode;
 	}
 	
 	

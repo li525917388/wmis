@@ -1,10 +1,11 @@
 <%--
-       角色管理（role）
+       角色管理（button）
   User: Li Dehuan
   Date: 2018/9/21
   Time: 11:02
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"></c:set>
 
@@ -31,7 +32,6 @@
 		<button type="button" onclick="delBase()" class="btn btn-sm btn-danger">删除</button>
 		<button type="button" onclick="viewBase()" class="btn btn-sm btn-success">查看</button>
 		<button type="button" onclick="reloadGrid()" class="btn btn-sm btn-success">刷新</button>
-		<button type="button" onclick="authority()" class="btn btn-sm btn-default">授权</button>
 	</div>
 	
 	<!-- 你的HTML代码 -->
@@ -52,20 +52,22 @@
 	$.jgrid.defaults.styleUI = "Bootstrap";
 
 	$("#menu_grid").jqGrid({
-        url: "${contextPath }/authority/role",
+        url: "${contextPath }/authority/button",
         datatype: "json",
         height: 250,
         autowidth: true,
         shrinkToFit: true,
         rowNum: 14,
         rowList: [10, 20, 30],
-        colNames: ["id", "角色编码", "角色名称", "角色类型", "描述"],
+        colNames: ["id", "按钮名称", "按钮编码", "按钮样式", "按钮事件", "顺序", "描述"],
         colModel: [
-        	{name: "id", index: "id", width: 60, sorttype: "int"},
-        	{name: "roleCode",index: "roleCode",width: 90 },
-        	{name: "roleName", index: "roleName", width: 100 }, 
-        	{name: "roleType", index: "roleType", width: 80  }, 
-        	{name: "describe",index: "describe",width: 80}
+        	{name: "id", index: "id", width: 50, sorttype: "int"},
+        	{name: "btnCode",index: "btnCode",width: 90 },
+        	{name: "btnName", index: "btnName", width: 100 }, 
+        	{name: "btnClass", index: "btnClass", width: 150  }, 
+        	{name: "btnEvent", index: "btnEvent", width: 100 }, 
+        	{name: "btnOrder", index: "btnOrder", width: 50  }, 
+        	{name: "btnDescribe",index: "btnDescribe",width: 150}
         ],
         pager: "#gridpager",
         viewrecords: true,
@@ -77,7 +79,7 @@
 	//添加
 	function addBase(){
 		
-		openWindow("${contextPath }/authority/role/edit/0");
+		openWindow("${contextPath }/authority/button/edit/0");
 	}
 	
 	//编辑
@@ -87,7 +89,7 @@
 		
 		if(ids.length == 1){
 			
-			openWindow("${contextPath }/authority/role/edit/" + ids);
+			openWindow("${contextPath }/authority/button/edit/" + ids);
 		}else if(ids.length == 0){
 			
 			layer.msg("请选择一条数据");
@@ -105,7 +107,7 @@
 		
 		if(ids.length == 1){
 			
-			openWindow("${contextPath }/authority/role/edit/" + ids + "?oper=view");
+			openWindow("${contextPath }/authority/button/edit/" + ids + "?oper=view");
 		}else if(ids.length == 0){
 			
 			layer.msg("请选择一条数据");
@@ -132,7 +134,7 @@
 			}
 			
 			$.ajax({
-				url: "${contextPath }/authority/role/" + id,
+				url: "${contextPath }/authority/button/" + id,
 				type: "DELETE",
 				//data: {ids: ids},
 				success: function(res){
@@ -151,24 +153,6 @@
 		}else{
 			
 			layer.msg("请选择一条数据");
-		}
-	}
-	
-	
-	//授权
-	function authority(){
-		
-		var ids = $("#menu_grid").jqGrid("getGridParam","selarrrow");
-		
-		if(ids.length == 1){
-			
-			openWindow("${contextPath }/authority/role/authority/" + ids);
-		}else if(ids.length == 0){
-			
-			layer.msg("请选择一条数据");
-		}else{
-			
-			layer.msg("只能选择一条数据");
 		}
 	}
 	

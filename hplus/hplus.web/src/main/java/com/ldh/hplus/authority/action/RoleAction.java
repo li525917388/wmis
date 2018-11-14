@@ -69,4 +69,24 @@ public class RoleAction extends BaseAction<Role> {
 		
 		return "authority/role/roleForm";
 	}
+	
+	
+	/**
+	 * 编辑页面
+	 * @return
+	 */
+	@RequestMapping(value="/authority/{id}",method=RequestMethod.GET)
+	public String toAuthorityPage(@PathVariable("id")Long id,String oper){
+		System.out.println("角色编辑页面。" + id);
+		
+		Role role = roleService.getBeanById(id);		//获取菜单
+		
+		List<Dictionary> typeList = dictionaryService.getDicListByType("roleType");
+		
+		getRequest().setAttribute("roleEntity", role);
+		getRequest().setAttribute("oper", oper);
+		getRequest().setAttribute("roleTypeList", typeList);
+		
+		return "authority/role/authorityForm";
+	}
 }
