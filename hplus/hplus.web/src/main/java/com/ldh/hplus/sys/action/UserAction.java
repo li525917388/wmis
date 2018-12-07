@@ -86,7 +86,7 @@ public class UserAction extends BaseAction<User> {
 		redisService.set(sessionId,user_json);
 		redisService.expireSeconds(sessionId, 600);	//设置时效
 		
-		resSuccess();
+		resSuccess(sessionId);
 	}
 	
 	

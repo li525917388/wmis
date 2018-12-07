@@ -32,6 +32,9 @@ public class Menu extends BaseBean{
 	
 	@LDH_Temp
 	private List<Menu> childList;	//子菜单
+	
+	@LDH_Temp
+	private int checked;			//是否选择
 
 	public String getMenuName() {
 		return menuName;
@@ -111,6 +114,14 @@ public class Menu extends BaseBean{
 
 	public void setChildList(List<Menu> childList) {
 		this.childList = childList;
+	}
+
+	public int getChecked() {
+		return checked;
+	}
+
+	public void setChecked(int checked) {
+		this.checked = checked;
 	}
 	
 }

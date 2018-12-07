@@ -3,5 +3,39 @@
 
 <mapper namespace="com.ldh.hplus.authority.dao.RoleDao">
 	
-
+	<!-- 获得权限菜单树 -->
+	<select id="getAuthorityMenuTree" parameterType="Long" resultType="Menu">
+		<![CDATA[
+			select 
+			case when f.id is null then 0 else 1 end as checked,
+			t.id,
+			t.menu_name as menuName,
+			t.menu_code as menuCode,
+			t.pcode 
+			from menu t
+			left join (
+				select m.* from menu m 
+				left join role_menu rm on rm.mid=m.id 
+				where rm.rid=#{id}
+			)f
+			on f.id=t.id
+		]]>
+	</select>
+	
+	<!-- 删除角色下菜单 -->
+	<delete id="delRoleMenuByRid" parameterType="Long">
+		<![CDATA[
+			delete from role_menu where rid=#{rid} 
+		]]>
+	</delete>
+	
+	
+	<!-- 插入角色权限菜单 -->
+	<insert id="insertRoleMenus" parameterType="java.util.List">
+		insert into role_menu(rid,mid) values
+		<foreach collection="list" index="index" item="item" separator=",">
+			(#{item.rid},#{item.mid}) 
+		</foreach>
+		
+	</insert>
 </mapper>

@@ -5,6 +5,8 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -18,6 +20,8 @@ import com.ldh.hplus.common.util.LdhResponse;
  */
 public class SuperAction {
 
+	private static Log log = LogFactory.getLog(SuperAction.class);
+	
 	/**
 	 * 返回成功
 	 * @throws IOException 
@@ -107,7 +111,8 @@ public class SuperAction {
 	 * @throws IOException
 	 */
 	public void returnJson(String str) throws IOException{
-		
+		log.info("响应参数==========>" + str);
+		getResponse().setContentType("charset=utf-8");
 		getResponse().getWriter().print(str);
 	}
 }
