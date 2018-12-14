@@ -1,4 +1,6 @@
 <%@page pageEncoding="UTF-8"%>
+<!--  -->
+<input type="hidden" id="contextPath_input" value="${contextPath}"/>
 <div id="page-wrapper" class="gray-bg dashbard-1">
     <div class="row border-bottom">
         <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
@@ -46,7 +48,7 @@
                 </li>
             </ul>
         </div>
-        <a href="login.html" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i> 退出</a>
+        <a title="${contextPath}/sys/user/exit" onclick="exitLogin()" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i> 退出</a>
     </div>
     <div class="row J_mainContent" id="content-main">
         <iframe id="ldh_content_iframe" class="J_iframe" name="iframe0" width="100%" height="100%" src="${contextPath}/home" data-id="/admin/index/index" seamless></iframe>

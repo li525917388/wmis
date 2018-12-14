@@ -10,3 +10,6 @@
 
 <!-- 第三方插件 -->
 <script src="${contextPath}/static/Hplus/js/plugins/pace/pace.min.js"></script>
+
+<!-- 公共js -->
+<script src="${contextPath}/static/js/common.js?v=2.1.4"></script>

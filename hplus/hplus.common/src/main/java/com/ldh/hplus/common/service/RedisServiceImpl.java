@@ -27,13 +27,11 @@ public class RedisServiceImpl implements RedisService{
 
 	@Override
 	public String get(String key) {
-		// TODO Auto-generated method stub
 		return stringRedisTemplate.opsForValue().get(key);
 	}
 
 	@Override
 	public void set(String key, List<String> list) {
-		// TODO Auto-generated method stub
 		for(int i = 0; i < list.size(); i++){
 			
 			stringRedisTemplate.opsForList().set(key, i, list.get(i));
@@ -43,20 +41,28 @@ public class RedisServiceImpl implements RedisService{
 
 	@Override
 	public List<String> getList(String key) {
-		// TODO Auto-generated method stub
 		return stringRedisTemplate.opsForList().range(key, 0, Integer.MAX_VALUE);
 	}
 
 	@Override
 	public void put(String key, String hashKey, String value) {
-		// TODO Auto-generated method stub
 		stringRedisTemplate.opsForHash().put(key, hashKey, value);
 	}
 
 	@Override
 	public void expireSeconds(String key, long timeout) {
-		// TODO Auto-generated method stub
 		stringRedisTemplate.expire(key, timeout, TimeUnit.SECONDS);
+	}
+
+	/*
+	 * 移除String值
+	 * @see com.ldh.hplus.common.service.RedisService#remove(java.lang.String)
+	 * 2018年12月7日
+	 */
+	@Override
+	public void remove(String key) {
+		
+		stringRedisTemplate.delete(key);;
 	}
 
 }

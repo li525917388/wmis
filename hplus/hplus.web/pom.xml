@@ -32,6 +32,12 @@
       <artifactId>hplus.consumer</artifactId>
       <version>0.0.1-SNAPSHOT</version>
     </dependency>
+    
+    <dependency>
+      <groupId>com.ldh</groupId>
+      <artifactId>hplus.producer</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+    </dependency>
   </dependencies>
 
   <build>

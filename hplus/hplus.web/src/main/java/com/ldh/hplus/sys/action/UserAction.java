@@ -91,6 +91,38 @@ public class UserAction extends BaseAction<User> {
 	
 	
 	/**
+	 * 退出登录
+	 * @param sessionId
+	 * @return
+	 */
+	@RequestMapping("exit")
+	public String exit(String sessionId) {
+		
+		if (sessionId == null) {
+			// 从cookie中取值
+			Cookie[] cookies = getRequest().getCookies();
+
+			if (cookies != null) {
+				for (int i = 0; i < cookies.length; i++) {
+
+					if (BaseConstants.SESSION_USER.equals(cookies[i].getName())) {
+
+						sessionId = cookies[i].getValue();
+						break;
+					}
+				}
+			}
+		}
+
+		redisService.remove(sessionId);		//删除redis缓存
+
+		getRequest().getSession().removeAttribute(BaseConstants.SESSION_USER);//移除session中的登录信息
+		
+		return "util/login";
+	}
+	
+	
+	/**
 	 * 列表页面
 	 * @return
 	 */

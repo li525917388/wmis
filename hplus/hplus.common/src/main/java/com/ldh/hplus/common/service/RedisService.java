@@ -28,6 +28,15 @@ public interface RedisService {
 	
 	
 	/**
+	 * 移除String值
+	 * @param key
+	 * @return
+	 */
+	public void remove(String key);
+	
+	
+	
+	/**
 	 * 新增List类型值
 	 * @param key
 	 * @param list

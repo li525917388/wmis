@@ -149,7 +149,6 @@ $().ready(function () {
  
     //重置
     $("#resetBtn").click(function(){
-    	
     	validator.resetForm();
     });
     

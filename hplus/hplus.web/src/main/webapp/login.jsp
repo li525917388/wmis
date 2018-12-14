@@ -19,7 +19,7 @@
 
 </head>
 <body style="background-color: ">
-
+	<img alt="" src="/dir/img/login/login_bg.jpg">
 	<div style="position: absolute;width:400px;left:50%;top:50%; 
 		margin-left:-200px;margin-top:-200px;border: 1px #ccc solid;background-color: white;">
 		<div class="ibox float-e-margins">

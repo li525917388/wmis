@@ -1,4 +1,7 @@
-
+function getContextPath(){
+	
+	return $("#contextPath_input").val();
+}
 
 // 页面弹出层
 function openWindow(url,title){
@@ -14,4 +17,17 @@ function openWindow(url,title){
 	});
 	
 	return index;
+}
+
+//退出
+function exitLogin() {
+
+	layer.confirm('是否退出本系统？', {
+		btn: ['确定','取消'] //按钮
+	}, function(){
+		window.location.href = getContextPath() + '/sys/user/exit';
+		
+	}, function(){
+		
+	});
 }

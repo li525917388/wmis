@@ -11,6 +11,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @SpringBootConfiguration
@@ -21,6 +22,12 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
 	
 	@Value("${ldh.exclude.path.patterns}")
 	private String noCheckList;
+	
+	@Value("${ldh.dir}")
+	private String dir;	//虚拟路径地址
+	
+	@Value("${ldh.dir_path}")
+	private String dir_path;	//虚拟路径地址
 
 	@Override  
     public void addInterceptors(InterceptorRegistry registry) { 
@@ -64,5 +71,16 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
     public HttpPutFormContentFilter httpPutFormContentFilter() {
         return new HttpPutFormContentFilter();
     }*/
+	
+	/**
+	 * 配置虚拟路径
+	 */
+	@Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		System.out.println("虚拟路径=====>" + dir);
+		System.out.println("虚拟路径地址=====>" + dir_path);
+        registry.addResourceHandler(dir).addResourceLocations("file:" + dir_path);  
+        super.addResourceHandlers(registry);
+    }
 
 }
